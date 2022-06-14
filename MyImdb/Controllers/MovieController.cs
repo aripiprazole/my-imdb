@@ -17,6 +17,21 @@ public class MovieController : Controller {
 	}
 
 	// GET
+	public IActionResult Show(string movieTitle) {
+		var movie = Movie
+			.SelectAll()
+			.Find(movie => movie.Title == movieTitle);
+
+		if (movie == null) {
+			return RedirectToAction(nameof(Index));
+		}
+
+		return View(new MovieShowViewModel {
+			Rank = movie.Rank, Title = movie.Title, Year = movie.Year, StoryLine = movie.StoryLine
+		});
+	}
+
+	// GET
 	public IActionResult Create() {
 		return View();
 	}

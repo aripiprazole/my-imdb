@@ -25,7 +25,11 @@
 		{
 			<tr>
 				<td>@movie.Rank</td>
-				<td>@movie.Title</td>
+				<td>
+					<a asp-action="Show" asp-route-movieTitle=@movie.Title>
+						@movie.Title
+					</a>
+				</td>
 				<td>@movie.Year</td>
 			</tr>
 		}
