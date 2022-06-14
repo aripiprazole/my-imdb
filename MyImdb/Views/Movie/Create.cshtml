@@ -1,0 +1,43 @@
+﻿@model MyImdb.ViewModels.CreateMovieViewModel
+
+@{
+	ViewBag.Title = "Create";
+	Layout = "_Layout";
+}
+
+<h1>Create</h1>
+<h4>MovieCreateViewModel</h4>
+<hr/>
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="Rank" class="control-label"></label>
+				<input asp-for="Rank" class="form-control"/>
+				<span asp-validation-for="Rank" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Title" class="control-label"></label>
+				<input asp-for="Title" class="form-control"/>
+				<span asp-validation-for="Title" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Year" class="control-label"></label>
+				<input asp-for="Year" class="form-control"/>
+				<span asp-validation-for="Year" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="StoryLine" class="control-label"></label>
+				<input asp-for="StoryLine" class="form-control"/>
+				<span asp-validation-for="StoryLine" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Create" class="btn btn-primary mt-2"/>
+			</div>
+		</form>
+	</div>
+</div>
+<div>
+	<a asp-action="Index">Back to List</a>
+</div>
