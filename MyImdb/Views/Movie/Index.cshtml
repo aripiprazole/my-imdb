@@ -1,4 +1,4 @@
-﻿@model List<MyImdb.ViewModels.MovieListViewModel>
+﻿@model List<MovieListViewModel>
 
 @{
 	ViewBag.Title = "List";
@@ -15,9 +15,9 @@
 
 	<b> Movies List:</b>
 	<br/>
-	<table>
+	<table class="table">
 		<tr>
-			<th>Rank</th>
+			<th>#</th>
 			<th>Title</th>
 			<th>Year</th>
 		</tr>
@@ -30,4 +30,8 @@
 			</tr>
 		}
 	</table>
+	<a asp-action="Create" class="btn btn-primary">
+		<i class="fa-solid fa-plus-large"></i>
+		Add movie
+	</a>
 </div>
