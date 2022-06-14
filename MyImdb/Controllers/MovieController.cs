@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyImdb.Models;
 using MyImdb.ViewModels;
 
 namespace MyImdb.Controllers;
@@ -6,7 +7,11 @@ namespace MyImdb.Controllers;
 public class MovieController : Controller {
 	// GET
 	public IActionResult Index() {
-		return RedirectToPage("/");
+		var movies = Movie
+			.SelectAll()
+			.ConvertAll(movie => new MovieListViewModel { Rank = movie.Rank, Title = movie.Title, Year = movie.Year, });
+
+		return View(movies);
 	}
 
 	// GET
