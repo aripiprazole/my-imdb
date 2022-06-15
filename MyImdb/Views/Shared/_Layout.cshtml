@@ -7,32 +7,88 @@
 	<script src="https://kit.fontawesome.com/7db5d2953c.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-	<link rel="stylesheet" href="~/MyImdb.styles.css" asp-append-version="true"/>
+	
+	<style>
+		body {
+			background: #f3f3f3;
+		}
+	</style>
 </head>
 <body>
+
 <header>
-	<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-		<div class="container-fluid">
-			<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MyImdb</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-			        aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-				<ul class="navbar-nav flex-grow-1">
-					<li class="nav-item">
-						<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-					</li>
-				</ul>
+	<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow">
+		<div class="container-fluid justify-content-start" style="max-width: 95rem">
+			<a class="navbar-brand mt-2 mb-2"
+			   asp-area=""
+			   asp-controller="Home"
+			   asp-action="Index">
+				<img alt="Logo" src="~/img/logo.png" width="120"/>
+			</a>
+
+			<div class="content d-block">
+				<div class="input-group d-flex">
+					<div class="form-outline">
+						<input type="search"
+						       id="query"
+						       class="form-control"
+						       placeholder="Search..."
+						       style="width: 20rem; border-top-right-radius: 0; border-bottom-right-radius: 0"/>
+						<label class="form-label d-none" for="query">Search</label>
+					</div>
+
+					<button type="button" class="btn btn-primary">
+						<i class="fas fa-search"></i>
+					</button>
+				</div>
+
+				<button class="navbar-toggler"
+				        type="button"
+				        data-bs-toggle="collapse"
+				        data-bs-target=".navbar-collapse"
+				        aria-controls="navbarSupportedContent"
+				        aria-expanded="false"
+				        aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+					<ul class="navbar-nav flex-grow-1">
+						<li class="nav-item">
+							<a class="nav-link text-light"
+							   asp-area=""
+							   asp-controller="Movie"
+							   asp-action="Index">
+								Movies
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link text-light"
+							   asp-area=""
+							   asp-controller="Home"
+							   asp-action="Index">
+								Genres
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link text-light"
+							   asp-area=""
+							   asp-controller="Home"
+							   asp-action="Index">
+								Actors
+							</a>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</nav>
 </header>
-<div class="container">
-	<main role="main" class="pb-3">
+
+<div class="container" id="myimdb-container">
+	<main role="main" class="bg-white">
 		@RenderBody()
 	</main>
 </div>
@@ -42,10 +98,12 @@
 		&copy; 2022 - MyImdb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
 	</div>
 </footer>
+
 <partial name="_ValidationScriptsPartial"/>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
+
 @await RenderSectionAsync("Scripts", false)
 </body>
 </html>

@@ -9,7 +9,7 @@ public class CreateMovieViewModel {
 	
 	[Required(ErrorMessage = "Title of the movie is required")]
 	[MaxLength(100, ErrorMessage = "Title can't be greater than {1} characters")]
-	public string Title { get; set; }
+	public string Title { get; set; } = default!;
 	
 	[Required(ErrorMessage = "Release year is required")]
 	[Range(1900, 2020, ErrorMessage = "Year of release should be in between {1} and {2}")]
@@ -17,5 +17,5 @@ public class CreateMovieViewModel {
 	
 	[Required(ErrorMessage = "The storyline of the movie is required")]
 	[MaxLength(200, ErrorMessage = "Storyline can't be greater than {1} characters")]
-	public string StoryLine { get; set; }
+	public string StoryLine { get; set; } = default!;
 }
