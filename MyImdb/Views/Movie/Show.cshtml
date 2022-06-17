@@ -5,21 +5,31 @@
 	Layout = "_Layout";
 }
 
-<h2>@Model.Title</h2>
+<div class="d-flex flex-column p-3">
+	<h2>@Model.Title</h2>
 
-<div class="d-flex">
-	<div class="banner" style="width:400px; height:400px;"></div>
-	<div class="info">
-		<h3>@Model.Title</h3>
-		<h5>
-			<b>Rank: </b> @Model.Rank
-		</h5>
-		<h5>
-			<b>Director: </b> John Doe
-		</h5>
-		
-		<p>
-			@Model.StoryLine
-		</p>
+	<div class="d-flex" style="gap: 13px">
+		<div class="banner d-flex" style="width:400px; height:400px; background: #ccc;">
+			<i class="fas fa-video m-auto" style="font-size: 3rem"></i>
+		</div>
+		<div class="info d-flex flex-column" style="gap: 8px; border-radius: 13px">
+			<h3>@Model.Title</h3>
+			<h5>
+				<b>Rank: </b> @Model.Rank
+			</h5>
+			<h5>
+				<b>Director: </b> John Doe
+			</h5>
+
+			<p>
+				@Model.StoryLine
+			</p>
+
+			<div class="d-flex" style="gap: 13px">
+				<button class="btn btn-outline-primary">Watch Trailer</button>
+
+				<button class="btn btn-outline-primary">Add to Watchlist</button>
+			</div>
+		</div>
 	</div>
 </div>
