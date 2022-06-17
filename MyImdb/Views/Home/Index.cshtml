@@ -3,6 +3,43 @@
 }
 
 <style>
+	.index-main {
+		display: grid;
+		grid-template-areas: 
+			'content content content sidebar'
+			'footer  footer  footer  sidebar';
+  		gap: 0.75rem;
+  		grid-template-columns: repeat(auto-fit, minmax(21.875rem, 1fr));
+    	grid-template-rows: max-content 1fr;
+    	
+    	height: 100%;
+	}
+	
+	.index-main main {
+		grid-area: content;
+	}
+	
+	.index-main nav {
+		grid-area: sidebar;
+		background: #eee;
+	}
+	
+	.index-main nav div {
+		padding: 1rem 0;
+		border-bottom: 1px solid #ccc;
+	}
+	
+	.index-main nav a {
+    	text-decoration: none;
+    	display: block;
+    	padding: 0.5rem 0;
+	}
+	
+	.index-main footer {
+		grid-area: footer;
+		flex: 1;
+	}
+
 	.months-movie > *:not(:last-child) {
 		margin-right: 30px; 
 	} 	
@@ -22,8 +59,8 @@
 	}
 </style>
 
-<div class="w-100 h-100 p-3">
-	<div style="margin-right: auto">
+<div class="w-100 h-100 index-main">
+	<main class="p-3" style="margin-right: auto">
 		<h4>Movies of the month</h4>
 
 		<ul class="months-movie d-flex flex-wrap list-unstyled">
@@ -63,11 +100,41 @@
 				</div>
 			</li>
 		</ul>
-	</div>
+	</main>
 
-	<div>
+	<nav class="p-3">
+		<div>
+			<h4>Opening this week</h4>
+			
+			<ul>
+				<li><a href="#">Beauty and the Beast</a></li>
+				<li><a href="#">T2 Trainspotting</a></li>
+				<li><a href="#">Song to song</a></li>
+				<li><a href="#">The Beiko Experiment</a></li>
+				<li><a href="#">Frants</a></li>
+			</ul>
+			
+			<a href="#">See more opening this week</a>
+		</div>
+		
+		<div>
+			<h4>Coming soon</h4>
+			
+			<ul>
+				<li><a href="#">Power Ranges</a></li>
+				<li><a href="#">Life</a></li>
+				<li><a href="#">CHPS</a></li>
+				<li><a href="#">Wilson</a></li>
+				<li><a href="#">Prevenge</a></li>
+			</ul>
+			
+			<a href="#">See coming soon</a>
+		</div>
+	</nav>
+	
+	<footer class="p-3">
 		<a asp-controller="Movie" asp-action="Index">
 			See the complete list
 		</a>
-	</div>
+	</footer>
 </div>
