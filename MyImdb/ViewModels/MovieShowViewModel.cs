@@ -1,4 +1,4 @@
-﻿namespace MyImdb.ViewModels; 
+﻿namespace MyImdb.ViewModels;
 
 public class MovieShowViewModel {
 	public int Rank { get; set; }

@@ -9,7 +9,7 @@ public class MovieController : Controller {
 	public IActionResult Index(string? message = null) {
 		var movies = Movie
 			.SelectAll()
-			.ConvertAll(movie => new MovieListViewModel { Rank = movie.Rank, Title = movie.Title, Year = movie.Year, });
+			.ConvertAll(movie => new MovieListViewModel { Rank = movie.Rank, Title = movie.Title, Year = movie.Year });
 
 		ViewBag.Message = message;
 
@@ -22,9 +22,7 @@ public class MovieController : Controller {
 			.SelectAll()
 			.Find(movie => movie.Title == movieTitle);
 
-		if (movie == null) {
-			return RedirectToAction(nameof(Index));
-		}
+		if (movie == null) return RedirectToAction(nameof(Index));
 
 		return View(new MovieShowViewModel {
 			Rank = movie.Rank, Title = movie.Title, Year = movie.Year, StoryLine = movie.StoryLine

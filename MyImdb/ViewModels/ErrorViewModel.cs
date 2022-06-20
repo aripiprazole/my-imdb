@@ -1,4 +1,4 @@
-namespace MyImdb.Models; 
+namespace MyImdb.Models;
 
 public class ErrorViewModel {
 	public string? RequestId { get; set; }

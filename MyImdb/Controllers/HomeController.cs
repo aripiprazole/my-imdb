@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MyImdb.Models;
 
-namespace MyImdb.Controllers; 
+namespace MyImdb.Controllers;
 
 public class HomeController : Controller {
 	private readonly ILogger<HomeController> logger;
