@@ -22,7 +22,7 @@ public class MovieRepository {
 		return await dbContext.Movies.FirstOrDefaultAsync(movie => movie.Title == title);
 	}
 
-	public async Task<Movie> CreateAsync(int rank, string title, int year, string storyLine) {
+	public async Task<Movie> CreateAsync(int rank, string title, int year, string storyLine, Genre genre) {
 		var movie = new Movie {
 			Id = Guid.NewGuid(),
 			Rank = rank,

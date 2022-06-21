@@ -2,5 +2,6 @@
 
 public enum ErrorCode {
 	Unknown = 0,
-	MovieTitleAlreadyExists = 1
+	MovieTitleAlreadyExists = 1,
+	GenreNotFound = 2
 }
