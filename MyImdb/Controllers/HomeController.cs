@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MyImdb.Models;
+using MyImdb.ViewModels;
 
 namespace MyImdb.Controllers;
 
