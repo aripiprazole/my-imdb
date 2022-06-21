@@ -17,4 +17,19 @@ public class MovieRepository {
 			.Take(n)
 			.ToListAsync();
 	}
+
+	public async Task<Movie> CreateAsync(int rank, string title, int year, string storyLine) {
+		var movie = new Movie {
+			Id = Guid.NewGuid(),
+			Rank = rank,
+			Title = title,
+			Year = year,
+			StoryLine = storyLine,
+			CreationDate = DateTimeOffset.Now
+		};
+
+		await dbContext.AddAsync(movie);
+
+		return movie;
+	}
 }

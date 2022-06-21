@@ -12,6 +12,8 @@ public class Movie {
 	[Required] //
 	public string Title { get; set; } = default!;
 
+	public int Year { get; set; }
+
 	[MaxLength(200)] //
 	public string StoryLine { get; set; } = default!;
 
