@@ -24,4 +24,8 @@ public class Movie {
 		get => new(creationDateUtc, TimeSpan.Zero);
 		set => creationDateUtc = value.UtcDateTime;
 	}
+	
+	private Guid genreId { get; set; }
+
+	public Genre Genre { get; set; } = default!;
 }
