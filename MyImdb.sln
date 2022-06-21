@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyImdb", "MyImdb\MyImdb.csproj", "{CD7AEA67-0F74-44CF-9A11-8F1653EC9E7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyImdb", "MyImdb\MyImdb.csproj", "{CD7AEA67-0F74-44CF-9A11-8F1653EC9E7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{EDD42B44-8BBB-40ED-A2AF-8DD7828D4EE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{CD7AEA67-0F74-44CF-9A11-8F1653EC9E7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD7AEA67-0F74-44CF-9A11-8F1653EC9E7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD7AEA67-0F74-44CF-9A11-8F1653EC9E7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDD42B44-8BBB-40ED-A2AF-8DD7828D4EE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDD42B44-8BBB-40ED-A2AF-8DD7828D4EE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDD42B44-8BBB-40ED-A2AF-8DD7828D4EE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDD42B44-8BBB-40ED-A2AF-8DD7828D4EE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
