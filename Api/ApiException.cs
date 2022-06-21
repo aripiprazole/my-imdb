@@ -1,6 +1,6 @@
 ﻿namespace Api;
 
-public class ApiException {
+public class ApiException : Exception {
 	public ErrorModel Error { get; }
 
 	public ApiException(ErrorModel error) {

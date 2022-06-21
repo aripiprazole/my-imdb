@@ -1,10 +1,15 @@
 using Microsoft.EntityFrameworkCore;
+using MyImdb.Business.Repositories;
+using MyImdb.Business.Services;
 using MyImdb.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<MovieRepository>();
+builder.Services.AddScoped<MovieService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")!));

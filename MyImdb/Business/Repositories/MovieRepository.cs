@@ -18,6 +18,10 @@ public class MovieRepository {
 			.ToListAsync();
 	}
 
+	public async Task<Movie?> SelectByTitleAsync(string title) {
+		return await dbContext.Movies.FirstOrDefaultAsync(movie => movie.Title == title);
+	}
+
 	public async Task<Movie> CreateAsync(int rank, string title, int year, string storyLine) {
 		var movie = new Movie {
 			Id = Guid.NewGuid(),

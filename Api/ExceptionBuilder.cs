@@ -1,7 +1,7 @@
 ﻿namespace Api;
 
 public class ExceptionBuilder {
-	public ApiException Api(ErrorCode code, object? details = null) {
+	public ApiException Build(ErrorCode code, object? details = null) {
 		var message = code switch {
 			ErrorCode.Unknown => "An unknown error occurred",
 			_ => ""
