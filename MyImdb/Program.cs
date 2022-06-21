@@ -14,6 +14,12 @@ builder.Services.AddScoped<GenreService>();
 builder.Services.AddScoped<MovieRepository>();
 builder.Services.AddScoped<MovieService>();
 
+builder.Services.AddScoped<ActorRepository>();
+builder.Services.AddScoped<ActorService>();
+
+builder.Services.AddScoped<MovieActorRepository>();
+builder.Services.AddScoped<MovieActorService>();
+
 builder.Services.AddDbContext<AppDbContext>(options =>
 	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")!));
 
