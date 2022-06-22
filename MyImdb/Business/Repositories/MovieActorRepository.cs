@@ -13,6 +13,10 @@ public class MovieActorRepository {
 	public async Task<List<Actor>> SelectActorsByMovieIdAsync(Guid id, int n = 20) {
 		var pivots = await dbContext.MovieActors
 			.Include(pivot => pivot.Actor)
+			.Include(pivot => pivot.Actor.MovieActors)
+			.Include(pivot => pivot.Movie)
+			.Include(pivot => pivot.Movie.Genre)
+			.Include(pivot => pivot.Movie.MovieActors)
 			.Where(pivot => pivot.MovieId == id)
 			.ToListAsync();
 
@@ -21,8 +25,11 @@ public class MovieActorRepository {
 
 	public async Task<List<Movie>> SelectMoviesByActorIdAsync(Guid id, int n = 20) {
 		var pivots = await dbContext.MovieActors
+			.Include(pivot => pivot.Actor)
+			.Include(pivot => pivot.Actor.MovieActors)
 			.Include(pivot => pivot.Movie)
 			.Include(pivot => pivot.Movie.Genre)
+			.Include(pivot => pivot.Movie.MovieActors)
 			.Where(pivot => pivot.ActorId == id)
 			.ToListAsync();
 

@@ -28,4 +28,6 @@ public class Movie {
 	public Guid GenreId { get; set; }
 
 	public Genre Genre { get; set; } = default!;
+
+	public List<MovieActor> MovieActors { get; set; } = default!;
 }

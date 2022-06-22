@@ -13,6 +13,7 @@ public class MovieRepository {
 	public Task<List<Movie>> SelectByGenreId(Guid genreId) {
 		return dbContext.Movies
 			.Include(movie => movie.Genre)
+			.Include(movie => movie.MovieActors)
 			.Where(movie => movie.GenreId == genreId)
 			.ToListAsync();
 	}
@@ -20,6 +21,7 @@ public class MovieRepository {
 	public async Task<List<Movie>> SelectTopNAsync(int n = 20) {
 		return await dbContext.Movies
 			.Include(movie => movie.Genre)
+			.Include(movie => movie.MovieActors)
 			.OrderBy(movie => movie.Title)
 			.AsQueryable()
 			.Take(n)
@@ -29,12 +31,14 @@ public class MovieRepository {
 	public async Task<Movie?> SelectByTitleAsync(string title) {
 		return await dbContext.Movies
 			.Include(movie => movie.Genre)
+			.Include(movie => movie.MovieActors)
 			.FirstOrDefaultAsync(movie => movie.Title == title);
 	}
 
 	public async Task<Movie?> SelectByIdAsync(Guid id) {
 		return await dbContext.Movies
 			.Include(movie => movie.Genre)
+			.Include(movie => movie.MovieActors)
 			.FirstOrDefaultAsync(movie => movie.Id == id);
 	}
 

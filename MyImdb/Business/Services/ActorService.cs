@@ -40,8 +40,10 @@ public class ActorService {
 	public async Task DeleteAsync(Actor actor) {
 		dbContext.Remove(actor);
 
-		await dbContext.SaveChangesAsync();
+		foreach (var movieActor in actor.MovieActors) {
+			dbContext.Remove(movieActor);
+		}
 
-		// TODO: remove all movie-actor related to the deleted actor
+		await dbContext.SaveChangesAsync();
 	}
 }

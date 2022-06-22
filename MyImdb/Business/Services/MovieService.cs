@@ -59,6 +59,10 @@ public class MovieService {
 	public async Task DeleteAsync(Movie movie) {
 		dbContext.Remove(movie);
 
+		foreach (var movieActor in movie.MovieActors) {
+			dbContext.Remove(movieActor);
+		}
+
 		await dbContext.SaveChangesAsync();
 	}
 }
