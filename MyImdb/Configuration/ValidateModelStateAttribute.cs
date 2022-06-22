@@ -18,7 +18,9 @@ public class ValidateModelStateAttribute : ActionFilterAttribute {
 	}
 
 	public override void OnActionExecuting(ActionExecutingContext context) {
-		if (context.ModelState.IsValid) return;
+		if (context.ModelState.IsValid) {
+			return;
+		}
 
 		context.Result = new JsonResult(new SerializableError(context.ModelState), serializerSettings) {
 			StatusCode = (int)HttpStatusCode.BadRequest

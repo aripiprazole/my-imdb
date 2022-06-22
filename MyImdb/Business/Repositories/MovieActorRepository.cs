@@ -39,7 +39,9 @@ public class MovieActorRepository {
 		var movieActor = await dbContext.MovieActors
 			.FirstOrDefaultAsync(pivot => pivot.MovieId == movieId && pivot.ActorId == actorId);
 
-		if (movieActor == null) return;
+		if (movieActor == null) {
+			return;
+		}
 
 		dbContext.Remove(movieActor);
 	}
