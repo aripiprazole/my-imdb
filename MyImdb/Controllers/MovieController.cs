@@ -58,7 +58,7 @@ public class MovieController {
 		return modelConverter.ToModel(movie);
 	}
 
-	[HttpPut("{id:guid}")]
+	[HttpDelete("{id:guid}")]
 	public async Task Delete(Guid id) {
 		var movie = await movieService.SelectByIdAsync(id);
 
