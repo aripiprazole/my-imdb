@@ -26,10 +26,7 @@ public class MovieService {
 	}
 
 	public async Task<Movie> CreateAsync(int rank, string title, int year, string storyLine, Guid genreId) {
-		var movieExists = await dbContext.Movies.AnyAsync(movie => movie.Title == title);
-		if (movieExists) throw ApiException.Builder().Build(ErrorCode.MovieTitleAlreadyExists, new { title });
-
-		var genre = await genreRepository.SelectIdAsync(genreId) ??
+		var genre = await genreRepository.SelectByIdAsync(genreId) ??
 		            throw ApiException.Builder().Build(ErrorCode.GenreNotFound);
 
 		var movie = await movieRepository.SelectByTitleAsync(title);

@@ -10,7 +10,7 @@ public class GenreRepository {
 		this.dbContext = dbContext;
 	}
 
-	public async Task<Genre?> SelectIdAsync(Guid id) {
+	public async Task<Genre?> SelectByIdAsync(Guid id) {
 		return await dbContext.Genres.FirstOrDefaultAsync(genre => genre.Id == id);
 	}
 
@@ -28,5 +28,9 @@ public class GenreRepository {
 		await dbContext.AddAsync(genre);
 
 		return genre;
+	}
+
+	public async Task<Genre?> SelectByNameAsync(string name) {
+		return await dbContext.Genres.FirstOrDefaultAsync(genre => genre.Name == name);
 	}
 }

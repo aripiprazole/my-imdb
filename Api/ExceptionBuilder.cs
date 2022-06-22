@@ -8,6 +8,7 @@ public class ExceptionBuilder {
 			ErrorCode.GenreNotFound => "Genre with this id not found",
 			ErrorCode.GenreAlreadyExists => "Genre with this name already exists",
 			ErrorCode.MovieNotFound => "Genre with this id not found",
+			ErrorCode.ActorNotFound => "Actor with this id not found",
 			_ => ""
 		};
 

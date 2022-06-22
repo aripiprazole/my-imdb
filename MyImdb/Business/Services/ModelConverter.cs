@@ -17,4 +17,8 @@ public class ModelConverter {
 			Genre = ToModel(movie.Genre)
 		};
 	}
+
+	public ActorModel ToModel(Actor actor) {
+		return new ActorModel { Id = actor.Id, Name = actor.Name, Birthplace = actor.Birthplace };
+	}
 }
