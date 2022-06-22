@@ -20,6 +20,8 @@ builder.Services.AddScoped<ActorService>();
 builder.Services.AddScoped<MovieActorRepository>();
 builder.Services.AddScoped<MovieActorService>();
 
+builder.Services.AddScoped<ModelConverter>();
+
 builder.Services.AddDbContext<AppDbContext>(options =>
 	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")!));
 
