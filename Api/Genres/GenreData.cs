@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Api.Genres; 
+namespace Api.Genres;
 
 public class GenreData {
 	[Required(ErrorMessage = "The name of the genre is required")]

@@ -1,6 +1,6 @@
 ﻿using MyImdb.Entities;
 
-namespace MyImdb.Business.Repositories; 
+namespace MyImdb.Business.Repositories;
 
 public class MovieActorRepository {
 	private readonly AppDbContext dbContext;

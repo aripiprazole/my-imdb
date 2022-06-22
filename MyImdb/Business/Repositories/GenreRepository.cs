@@ -23,11 +23,8 @@ public class GenreRepository {
 	}
 
 	public async Task<Genre> CreateAsync(string name) {
-		var genre = new Genre {
-			Id = Guid.NewGuid(),
-			Name = name
-		};
-		
+		var genre = new Genre { Id = Guid.NewGuid(), Name = name };
+
 		await dbContext.AddAsync(genre);
 
 		return genre;

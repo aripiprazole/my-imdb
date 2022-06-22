@@ -1,4 +1,4 @@
-﻿namespace MyImdb.Models; 
+﻿namespace MyImdb.Models;
 
 public class GenreModel {
 	public Guid Id { get; set; }

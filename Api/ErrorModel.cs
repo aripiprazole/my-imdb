@@ -3,7 +3,7 @@
 namespace Api;
 
 public class ErrorModel {
-	[JsonProperty("code")] //
+	[JsonProperty("code")]
 	private string codeStr { get; set; } = default!;
 
 	[JsonIgnore]

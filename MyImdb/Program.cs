@@ -13,7 +13,6 @@ builder.Host.ConfigureLogging((hostingContext, logging) => {
 	logging.AddSerilog(configuration.ReadFrom
 		.Configuration(hostingContext.Configuration, "Serilog")
 		.CreateLogger());
-	
 });
 
 // Add services to the container.

@@ -6,9 +6,9 @@ using MyImdb.Entities;
 namespace MyImdb.Business.Services;
 
 public class GenreService {
-	private readonly MovieRepository movieRepository;
-	private readonly GenreRepository genreRepository;
 	private readonly AppDbContext dbContext;
+	private readonly GenreRepository genreRepository;
+	private readonly MovieRepository movieRepository;
 
 	public GenreService(MovieRepository movieRepository, GenreRepository genreRepository, AppDbContext dbContext) {
 		this.movieRepository = movieRepository;
@@ -27,9 +27,7 @@ public class GenreService {
 
 	public async Task<Genre> CreateAsync(string name) {
 		var genreExists = await dbContext.Genres.AnyAsync(genre => genre.Name == name);
-		if (genreExists) {
-			throw ApiException.Builder().Build(ErrorCode.GenreAlreadyExists, new { name });
-		}
+		if (genreExists) throw ApiException.Builder().Build(ErrorCode.GenreAlreadyExists, new { name });
 
 		var genre = await genreRepository.CreateAsync(name);
 
@@ -40,9 +38,7 @@ public class GenreService {
 
 	public async Task UpdateAsync(Genre target, string name) {
 		var genreExists = await dbContext.Genres.AnyAsync(genre => genre.Name == name && genre.Id != target.Id);
-		if (genreExists) {
-			throw ApiException.Builder().Build(ErrorCode.GenreAlreadyExists, new { name });
-		}
+		if (genreExists) throw ApiException.Builder().Build(ErrorCode.GenreAlreadyExists, new { name });
 
 		target.Name = name;
 

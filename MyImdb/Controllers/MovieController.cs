@@ -8,11 +8,11 @@ namespace MyImdb.Controllers;
 [ApiController]
 [Route("api/movies")]
 public class MovieController {
-	private readonly MovieService movieService;
 	private readonly ModelConverter modelConverter;
+	private readonly MovieService movieService;
 
 	public MovieController(ModelConverter modelConverter) {
-		this.movieService = movieService;
+		movieService = movieService;
 		this.modelConverter = modelConverter;
 	}
 
@@ -32,11 +32,11 @@ public class MovieController {
 
 	public async Task<MovieModel> Create(MovieData request) {
 		var movie = await movieService.CreateAsync(
-			rank: request.Rank,
-			title: request.Title,
-			year: request.Year,
-			storyLine: request.StoryLine,
-			genreId: request.GenreId
+			request.Rank,
+			request.Title,
+			request.Year,
+			request.StoryLine,
+			request.GenreId
 		);
 
 		return modelConverter.ToModel(movie);
@@ -48,11 +48,11 @@ public class MovieController {
 
 		await movieService.UpdateAsync(
 			movie,
-			rank: request.Rank,
-			title: request.Title,
-			year: request.Year,
-			storyLine: request.StoryLine,
-			genreId: request.GenreId
+			request.Rank,
+			request.Title,
+			request.Year,
+			request.StoryLine,
+			request.GenreId
 		);
 
 		return modelConverter.ToModel(movie);

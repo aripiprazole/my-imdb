@@ -1,7 +1,7 @@
 ﻿using MyImdb.Business.Repositories;
 using MyImdb.Entities;
 
-namespace MyImdb.Business.Services; 
+namespace MyImdb.Business.Services;
 
 public class MovieActorService {
 	private readonly MovieActorRepository actorRepository;

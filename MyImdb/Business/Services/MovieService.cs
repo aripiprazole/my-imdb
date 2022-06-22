@@ -6,9 +6,9 @@ using MyImdb.Entities;
 namespace MyImdb.Business.Services;
 
 public class MovieService {
+	private readonly AppDbContext dbContext;
 	private readonly GenreRepository genreRepository;
 	private readonly MovieRepository movieRepository;
-	private readonly AppDbContext dbContext;
 
 	public MovieService(GenreRepository genreRepository, MovieRepository movieRepository, AppDbContext dbContext) {
 		this.genreRepository = genreRepository;
@@ -27,17 +27,13 @@ public class MovieService {
 
 	public async Task<Movie> CreateAsync(int rank, string title, int year, string storyLine, Guid genreId) {
 		var movieExists = await dbContext.Movies.AnyAsync(movie => movie.Title == title);
-		if (movieExists) {
-			throw ApiException.Builder().Build(ErrorCode.MovieTitleAlreadyExists, new { title });
-		}
-		
+		if (movieExists) throw ApiException.Builder().Build(ErrorCode.MovieTitleAlreadyExists, new { title });
+
 		var genre = await genreRepository.SelectIdAsync(genreId) ??
 		            throw ApiException.Builder().Build(ErrorCode.GenreNotFound);
 
 		var movie = await movieRepository.SelectByTitleAsync(title);
-		if (movie != null) {
-			throw ApiException.Builder().Build(ErrorCode.MovieTitleAlreadyExists, new { title });
-		}
+		if (movie != null) throw ApiException.Builder().Build(ErrorCode.MovieTitleAlreadyExists, new { title });
 
 		movie = await movieRepository.CreateAsync(rank, title, year, storyLine, genre);
 
@@ -48,9 +44,7 @@ public class MovieService {
 
 	public async Task UpdateAsync(Movie target, int rank, string title, int year, string storyLine, Guid genreId) {
 		var movieExists = await dbContext.Movies.AnyAsync(movie => movie.Title == title && movie.Id != target.Id);
-		if (movieExists) {
-			throw ApiException.Builder().Build(ErrorCode.MovieTitleAlreadyExists, new { title });
-		}
+		if (movieExists) throw ApiException.Builder().Build(ErrorCode.MovieTitleAlreadyExists, new { title });
 
 		target.Rank = rank;
 		target.Title = title;
