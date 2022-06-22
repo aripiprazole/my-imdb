@@ -160,7 +160,7 @@ dotnet_naming_rule.async_private_methods_must_be_camel_case_and_have_suffix.styl
 # Async non-private methods must be pascal case and end in "Async"
 dotnet_naming_rule.async_non_private_methods_must_be_pascal_case_and_have_suffix.severity = warning
 dotnet_naming_rule.async_non_private_methods_must_be_pascal_case_and_have_suffix.symbols = async_non_private_methods
-dotnet_naming_rule.async_non_private_methods_must_be_pascal_case_and_have_suffix.style = async_non_private_method_style
+dotnet_naming_rule.async_non_private_methods_must_be_pascal_case_and_have_suffix.style = pascal_case_style
 
 # Non-private members must be pascal case
 dotnet_naming_rule.non_private_members_must_be_pascal_case.severity = warning

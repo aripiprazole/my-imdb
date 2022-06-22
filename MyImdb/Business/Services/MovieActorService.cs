@@ -11,4 +11,12 @@ public class MovieActorService {
 		this.actorRepository = actorRepository;
 		this.dbContext = dbContext;
 	}
+
+	public async Task<List<Movie>> SelectMoviesByActorIdAsync(Guid id, int n = 20) {
+		return await actorRepository.SelectMoviesByActorIdAsync(id, n);
+	}
+
+	public async Task<List<Actor>> SelectActorsByMovieIdAsync(Guid id, int n = 20) {
+		return await actorRepository.SelectActorsByMovieIdAsync(id, n);
+	}
 }

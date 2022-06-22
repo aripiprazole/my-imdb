@@ -10,10 +10,16 @@ namespace MyImdb.Controllers;
 public class ActorController {
 	private readonly ActorService actorService;
 	private readonly ModelConverter modelConverter;
+	private readonly MovieActorService movieActorService;
 
-	public ActorController(ModelConverter modelConverter, ActorService actorService) {
-		this.modelConverter = modelConverter;
+	public ActorController(
+		ActorService actorService,
+		MovieActorService movieActorService,
+		ModelConverter modelConverter
+	) {
 		this.actorService = actorService;
+		this.movieActorService = movieActorService;
+		this.modelConverter = modelConverter;
 	}
 
 	[HttpGet("{id:guid}")]
@@ -30,6 +36,14 @@ public class ActorController {
 		return actors.ConvertAll(modelConverter.ToModel);
 	}
 
+	[HttpGet("{id:guid}/movies")]
+	public async Task<List<MovieModel>> ListMovies(Guid id, int n = 20) {
+		var movies = await movieActorService.SelectMoviesByActorIdAsync(id, n);
+
+		return movies.ConvertAll(modelConverter.ToModel);
+	}
+
+	[HttpPost]
 	public async Task<ActorModel> Create(ActorData request) {
 		var actor = await actorService.CreateAsync(
 			request.Name,
