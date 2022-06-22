@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Api.Genres;
+namespace Api.Movies;
 
 public class MovieData {
 	[Required(ErrorMessage = "Rank is required")]

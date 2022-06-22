@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Api.Genres;
+namespace Api.Actors;
 
 public class ActorData {
 	[MaxLength(100)]

@@ -1,4 +1,4 @@
-﻿using Api.Genres;
+﻿using Api.Movies;
 using Microsoft.AspNetCore.Mvc;
 using MyImdb.Business.Services;
 using MyImdb.Models;
