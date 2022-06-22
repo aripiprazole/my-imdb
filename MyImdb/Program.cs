@@ -3,8 +3,18 @@ using MyImdb.Business.Repositories;
 using MyImdb.Business.Services;
 using MyImdb.Configuration;
 using MyImdb.Entities;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.ConfigureLogging((hostingContext, logging) => {
+	var configuration = new LoggerConfiguration();
+
+	logging.AddSerilog(configuration.ReadFrom
+		.Configuration(hostingContext.Configuration, "Serilog")
+		.CreateLogger());
+	
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
