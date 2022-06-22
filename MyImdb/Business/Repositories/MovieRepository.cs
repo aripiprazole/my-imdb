@@ -11,11 +11,15 @@ public class MovieRepository {
 	}
 
 	public Task<List<Movie>> SelectByGenreId(Guid genreId) {
-		return dbContext.Movies.Where(movie => movie.GenreId == genreId).ToListAsync();
+		return dbContext.Movies
+			.Include(movie => movie.Genre)
+			.Where(movie => movie.GenreId == genreId)
+			.ToListAsync();
 	}
 
 	public async Task<List<Movie>> SelectTopNAsync(int n = 20) {
 		return await dbContext.Movies
+			.Include(movie => movie.Genre)
 			.OrderBy(movie => movie.Title)
 			.AsQueryable()
 			.Take(n)
