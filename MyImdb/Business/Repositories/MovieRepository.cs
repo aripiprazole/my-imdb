@@ -41,7 +41,8 @@ public class MovieRepository {
 			Title = title,
 			Year = year,
 			StoryLine = storyLine,
-			CreationDate = DateTimeOffset.Now
+			CreationDate = DateTimeOffset.Now,
+			GenreId = genre.Id
 		};
 
 		await dbContext.AddAsync(movie);
