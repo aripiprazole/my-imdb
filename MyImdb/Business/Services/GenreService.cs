@@ -38,15 +38,6 @@ public class GenreService {
 		return genre;
 	}
 
-	public async Task DeleteAsync(Genre genre) {
-		var movies = await movieRepository.SelectByGenreId(genre.Id);
-
-		dbContext.RemoveRange(movies);
-		dbContext.Remove(genre);
-
-		await dbContext.SaveChangesAsync();
-	}
-
 	public async Task UpdateAsync(Genre target, string name) {
 		var genreExists = await dbContext.Genres.AnyAsync(genre => genre.Name == name && genre.Id != target.Id);
 		if (genreExists) {
@@ -54,6 +45,15 @@ public class GenreService {
 		}
 
 		target.Name = name;
+
+		await dbContext.SaveChangesAsync();
+	}
+
+	public async Task DeleteAsync(Genre genre) {
+		var movies = await movieRepository.SelectByGenreId(genre.Id);
+
+		dbContext.RemoveRange(movies);
+		dbContext.Remove(genre);
 
 		await dbContext.SaveChangesAsync();
 	}

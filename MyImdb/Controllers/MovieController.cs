@@ -1,46 +1,67 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Api.Genres;
+using Microsoft.AspNetCore.Mvc;
+using MyImdb.Business.Services;
 using MyImdb.Models;
-using MyImdb.ViewModels;
 
 namespace MyImdb.Controllers;
 
-public class MovieController : Controller {
-	// GET
-	public IActionResult Index(string? message = null) {
-		var movies = Movie
-			.SelectAll()
-			.ConvertAll(movie => new MovieListViewModel { Rank = movie.Rank, Title = movie.Title, Year = movie.Year });
+[ApiController]
+[Route("api/movies")]
+public class MovieController {
+	private readonly MovieService movieService;
+	private readonly ModelConverter modelConverter;
 
-		ViewBag.Message = message;
-
-		return View(movies);
+	public MovieController(ModelConverter modelConverter) {
+		this.movieService = movieService;
+		this.modelConverter = modelConverter;
 	}
 
-	// GET
-	public IActionResult Show(string movieTitle) {
-		var movie = Movie
-			.SelectAll()
-			.Find(movie => movie.Title == movieTitle);
+	[HttpGet("{id:guid}")]
+	public async Task<MovieModel> Get(Guid id) {
+		var movie = await movieService.SelectByIdAsync(id);
 
-		if (movie == null) return RedirectToAction(nameof(Index));
-
-		return View(new MovieShowViewModel {
-			Rank = movie.Rank, Title = movie.Title, Year = movie.Year, StoryLine = movie.StoryLine
-		});
+		return modelConverter.ToModel(movie);
 	}
 
-	// GET
-	public IActionResult Create() {
-		return View();
+	[HttpGet]
+	public async Task<List<MovieModel>> List(int n = 20) {
+		var movies = await movieService.SelectTopNAsync(n);
+
+		return movies.ConvertAll(modelConverter.ToModel);
 	}
 
-	// POST
-	[HttpPost]
-	public IActionResult Create(CreateMovieViewModel model) {
-		// Aqui usa-se nameof(Index) porque a função RedirectToAction, requer um parametro string, e usar apenas Index,
-		// resultaria numa referência de função.
-		return ModelState.IsValid
-			? RedirectToAction(nameof(Index), new { message = "Movie created successfully!" })
-			: View(model);
+	public async Task<MovieModel> Create(MovieData request) {
+		var movie = await movieService.CreateAsync(
+			rank: request.Rank,
+			title: request.Title,
+			year: request.Year,
+			storyLine: request.StoryLine,
+			genreId: request.GenreId
+		);
+
+		return modelConverter.ToModel(movie);
+	}
+
+	[HttpPut("{id:guid}")]
+	public async Task<MovieModel> Update(Guid id, MovieData request) {
+		var movie = await movieService.SelectByIdAsync(id);
+
+		await movieService.UpdateAsync(
+			movie,
+			rank: request.Rank,
+			title: request.Title,
+			year: request.Year,
+			storyLine: request.StoryLine,
+			genreId: request.GenreId
+		);
+
+		return modelConverter.ToModel(movie);
+	}
+
+	[HttpPut("{id:guid}")]
+	public async Task Delete(Guid id) {
+		var movie = await movieService.SelectByIdAsync(id);
+
+		await movieService.DeleteAsync(movie);
 	}
 }
