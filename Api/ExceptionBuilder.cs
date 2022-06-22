@@ -4,11 +4,11 @@ public class ExceptionBuilder {
 	public ApiException Build(ErrorCode code, object? details = null) {
 		var message = code switch {
 			ErrorCode.Unknown => "An unknown error occurred",
-			ErrorCode.MovieTitleAlreadyExists => "Movie with this title already exists",
-			ErrorCode.GenreNotFound => "Genre with this id not found",
-			ErrorCode.GenreAlreadyExists => "Genre with this name already exists",
-			ErrorCode.MovieNotFound => "Movie with this id not found",
-			ErrorCode.ActorNotFound => "Actor with this id not found",
+			ErrorCode.GenreNotFound => "Genre not found",
+			ErrorCode.GenreAlreadyExists => "Genre already exists",
+			ErrorCode.MovieNotFound => "Movie not found",
+			ErrorCode.MovieAlreadyExists => "Movie already exists",
+			ErrorCode.ActorNotFound => "Actor not found",
 			_ => ""
 		};
 

@@ -18,7 +18,7 @@ public class GenreService {
 
 	public async Task<Genre> SelectByIdAsync(Guid id) {
 		return await genreRepository.SelectByIdAsync(id)
-		       ?? throw ApiException.Builder().Build(ErrorCode.GenreNotFound);
+		       ?? throw ApiException.Builder().Build(ErrorCode.GenreNotFound, new { id });
 	}
 
 	public async Task<List<Genre>> SelectTopNAsync(int n = 20) {
@@ -28,7 +28,7 @@ public class GenreService {
 	public async Task<Genre> CreateAsync(string name) {
 		var genre = await genreRepository.SelectByNameAsync(name);
 		if (genre != null) {
-			throw ApiException.Builder().Build(ErrorCode.GenreNotFound);
+			throw ApiException.Builder().Build(ErrorCode.GenreNotFound, new { name });
 		}
 
 		genre = await genreRepository.CreateAsync(name);
