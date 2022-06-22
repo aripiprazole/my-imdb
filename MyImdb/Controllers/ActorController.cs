@@ -8,18 +8,21 @@ namespace MyImdb.Controllers;
 [ApiController]
 [Route("api/actors")]
 public class ActorController {
-	private readonly ActorService actorService;
 	private readonly ModelConverter modelConverter;
+	private readonly ActorService actorService;
+	private readonly MovieService movieService;
 	private readonly MovieActorService movieActorService;
 
 	public ActorController(
+		ModelConverter modelConverter,
 		ActorService actorService,
-		MovieActorService movieActorService,
-		ModelConverter modelConverter
+		MovieService movieService,
+		MovieActorService movieActorService
 	) {
-		this.actorService = actorService;
-		this.movieActorService = movieActorService;
 		this.modelConverter = modelConverter;
+		this.actorService = actorService;
+		this.movieService = movieService;
+		this.movieActorService = movieActorService;
 	}
 
 	[HttpGet("{id:guid}")]
@@ -45,12 +48,18 @@ public class ActorController {
 
 	[HttpPost("{id:guid}/movies")]
 	public async Task LinkMovie(Guid id, LinkMovieAndActorData request) {
-		await movieActorService.LinkMovieToActor(request.TargetMovieId, id);
+		var movie = await movieService.SelectByIdAsync(request.TargetMovieId);
+		var actor = await actorService.SelectByIdAsync(id);
+
+		await movieActorService.LinkMovieToActorAsync(movie.Id, actor.Id);
 	}
 
 	[HttpDelete("{id:guid}/movies")]
 	public async Task UnlinkMovie(Guid id, LinkMovieAndActorData request) {
-		await movieActorService.UnlinkMovieFromActor(request.TargetMovieId, id);
+		var movie = await movieService.SelectByIdAsync(request.TargetMovieId);
+		var actor = await actorService.SelectByIdAsync(id);
+
+		await movieActorService.UnlinkMovieFromActorAsync(movie.Id, actor.Id);
 	}
 
 	[HttpPost]
