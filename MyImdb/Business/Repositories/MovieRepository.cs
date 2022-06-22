@@ -27,11 +27,15 @@ public class MovieRepository {
 	}
 
 	public async Task<Movie?> SelectByTitleAsync(string title) {
-		return await dbContext.Movies.FirstOrDefaultAsync(movie => movie.Title == title);
+		return await dbContext.Movies
+			.Include(movie => movie.Genre)
+			.FirstOrDefaultAsync(movie => movie.Title == title);
 	}
 
 	public async Task<Movie?> SelectByIdAsync(Guid id) {
-		return await dbContext.Movies.FirstOrDefaultAsync(movie => movie.Id == id);
+		return await dbContext.Movies
+			.Include(movie => movie.Genre)
+			.FirstOrDefaultAsync(movie => movie.Id == id);
 	}
 
 	public async Task<Movie> CreateAsync(int rank, string title, int year, string storyLine, Genre genre) {
