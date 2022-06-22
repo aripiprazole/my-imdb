@@ -11,9 +11,9 @@ public class MovieController {
 	private readonly ModelConverter modelConverter;
 	private readonly MovieService movieService;
 
-	public MovieController(ModelConverter modelConverter) {
-		movieService = movieService;
+	public MovieController(ModelConverter modelConverter, MovieService movieService) {
 		this.modelConverter = modelConverter;
+		this.movieService = movieService;
 	}
 
 	[HttpGet("{id:guid}")]
