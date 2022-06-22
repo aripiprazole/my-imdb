@@ -1,5 +1,4 @@
-﻿using Api;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MyImdb.Entities;
 
 namespace MyImdb.Business.Repositories;
@@ -32,9 +31,5 @@ public class GenreRepository {
 		await dbContext.AddAsync(genre);
 
 		return genre;
-	}
-
-	public void Delete(Genre genre) {
-		dbContext.Remove(genre);
 	}
 }

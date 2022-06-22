@@ -18,7 +18,7 @@ public class GenreController {
 
 	[HttpGet("{id:guid}")]
 	public async Task<GenreModel> Get(Guid id) {
-		var genre = await genreService.GetByIdAsync(id);
+		var genre = await genreService.SelectByIdAsync(id);
 
 		return modelConverter.ToModel(genre);
 	}
@@ -39,7 +39,7 @@ public class GenreController {
 
 	[HttpPut("{id:guid}")]
 	public async Task<GenreModel> Update(Guid id, GenreData request) {
-		var genre = await genreService.GetByIdAsync(id);
+		var genre = await genreService.SelectByIdAsync(id);
 
 		await genreService.UpdateAsync(genre, request.Name);
 
@@ -48,7 +48,7 @@ public class GenreController {
 
 	[HttpDelete("{id:guid}")]
 	public async Task Delete(Guid id) {
-		var genre = await genreService.GetByIdAsync(id);
+		var genre = await genreService.SelectByIdAsync(id);
 
 		await genreService.DeleteAsync(genre);
 	}

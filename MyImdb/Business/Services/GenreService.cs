@@ -16,7 +16,7 @@ public class GenreService {
 		this.dbContext = dbContext;
 	}
 
-	public async Task<Genre> GetByIdAsync(Guid id) {
+	public async Task<Genre> SelectByIdAsync(Guid id) {
 		return await genreRepository.SelectIdAsync(id)
 		       ?? throw ApiException.Builder().Build(ErrorCode.GenreNotFound);
 	}
@@ -42,7 +42,7 @@ public class GenreService {
 		var movies = await movieRepository.SelectByGenreId(genre.Id);
 
 		dbContext.RemoveRange(movies);
-		genreRepository.Delete(genre);
+		dbContext.Remove(genre);
 
 		await dbContext.SaveChangesAsync();
 	}
