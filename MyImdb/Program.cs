@@ -30,7 +30,7 @@ builder.Services.AddDbContext<AppDbContext>(options => {
 builder.Services.AddControllersWithViews(options => {
 	options.Filters.Add<HandleExceptionFilter>();
 	options.Filters.Add<ValidateModelStateAttribute>();
-});
+}).AddNewtonsoftJson();
 
 var app = builder.Build();
 
