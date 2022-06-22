@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Api.Genres;
+using Microsoft.AspNetCore.Mvc;
 using MyImdb.Business.Services;
 using MyImdb.Models;
 
@@ -20,5 +21,35 @@ public class GenreController {
 		var genre = await genreService.GetByIdAsync(id);
 
 		return modelConverter.ToModel(genre);
+	}
+
+	[HttpGet]
+	public async Task<List<GenreModel>> List(int n = 20) {
+		var genres = await genreService.SelectTopNAsync(n);
+
+		return genres.ConvertAll(modelConverter.ToModel);
+	}
+
+	[HttpPost]
+	public async Task<GenreModel> Create(GenreData request) {
+		var genre = await genreService.CreateAsync(request.Name);
+
+		return modelConverter.ToModel(genre);
+	}
+
+	[HttpPut("{id:guid}")]
+	public async Task<GenreModel> Update(Guid id, GenreData request) {
+		var genre = await genreService.GetByIdAsync(id);
+
+		await genreService.UpdateAsync(genre, request.Name);
+
+		return modelConverter.ToModel(genre);
+	}
+
+	[HttpDelete("{id:guid}")]
+	public async Task Delete(Guid id) {
+		var genre = await genreService.GetByIdAsync(id);
+
+		await genreService.DeleteAsync(genre);
 	}
 }

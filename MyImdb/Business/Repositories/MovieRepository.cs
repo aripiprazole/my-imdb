@@ -10,6 +10,10 @@ public class MovieRepository {
 		this.dbContext = dbContext;
 	}
 
+	public Task<List<Movie>> SelectByGenreId(Guid genreId) {
+		return dbContext.Movies.Where(movie => movie.GenreId == genreId).ToListAsync();
+	}
+
 	public async Task<List<Movie>> SelectTopNAsync(int n = 20) {
 		return await dbContext.Movies
 			.OrderBy(movie => movie.Title)
