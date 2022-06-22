@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MyImdb.Business.Repositories;
 using MyImdb.Business.Services;
+using MyImdb.Configuration;
 using MyImdb.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,8 +23,13 @@ builder.Services.AddScoped<MovieActorService>();
 
 builder.Services.AddScoped<ModelConverter>();
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")!));
+builder.Services.AddDbContext<AppDbContext>(options => {
+	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")!);
+});
+
+builder.Services.AddControllersWithViews(options => {
+	options.Filters.Add<ValidateModelStateAttribute>();
+});
 
 var app = builder.Build();
 
