@@ -13,31 +13,31 @@ public class ActorService {
 		this.dbContext = dbContext;
 	}
 
-	public async Task<Actor> SelectByIdAsync(Guid id) {
-		return await actorRepository.SelectByIdAsync(id) ??
+	public async Task<Actor> SelectById(Guid id) {
+		return await actorRepository.SelectById(id) ??
 		       throw ApiException.Builder().Build(ErrorCode.ActorNotFound, new { id });
 	}
 
-	public async Task<List<Actor>> SelectTopNAsync(int n = 20) {
-		return await actorRepository.SelectTopNAsync(n);
+	public async Task<List<Actor>> SelectTopN(int n = 20) {
+		return await actorRepository.SelectTopN(n);
 	}
 
-	public async Task<Actor> CreateAsync(string name, string birthplace) {
-		var movie = await actorRepository.CreateAsync(name, birthplace);
+	public async Task<Actor> Create(string name, string birthplace) {
+		var movie = await actorRepository.Create(name, birthplace);
 
 		await dbContext.SaveChangesAsync();
 
 		return movie;
 	}
 
-	public async Task UpdateAsync(Actor target, string name, string birthplace) {
+	public async Task Update(Actor target, string name, string birthplace) {
 		target.Name = name;
 		target.Birthplace = birthplace;
 
 		await dbContext.SaveChangesAsync();
 	}
 
-	public async Task DeleteAsync(Actor actor) {
+	public async Task Delete(Actor actor) {
 		dbContext.Remove(actor);
 
 		foreach (var movieActor in actor.MovieActors) {

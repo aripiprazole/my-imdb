@@ -16,32 +16,32 @@ public class MovieService {
 		this.dbContext = dbContext;
 	}
 
-	public async Task<Movie> SelectByIdAsync(Guid id) {
-		return await movieRepository.SelectByIdAsync(id) ??
+	public async Task<Movie> SelectById(Guid id) {
+		return await movieRepository.SelectById(id) ??
 		       throw ApiException.Builder().Build(ErrorCode.MovieNotFound, new { id });
 	}
 
-	public async Task<List<Movie>> SelectTopNAsync(int n = 20) {
-		return await movieRepository.SelectTopNAsync(n);
+	public async Task<List<Movie>> SelectTopN(int n = 20) {
+		return await movieRepository.SelectTopN(n);
 	}
 
-	public async Task<Movie> CreateAsync(int rank, string title, int year, string storyLine, Guid genreId) {
-		var genre = await genreRepository.SelectByIdAsync(genreId) ??
+	public async Task<Movie> Create(int rank, string title, int year, string storyLine, Guid genreId) {
+		var genre = await genreRepository.SelectById(genreId) ??
 		            throw ApiException.Builder().Build(ErrorCode.GenreNotFound, new { id = genreId });
 
-		var movie = await movieRepository.SelectByTitleAsync(title);
+		var movie = await movieRepository.SelectByTitle(title);
 		if (movie != null) {
 			throw ApiException.Builder().Build(ErrorCode.MovieAlreadyExists, new { title });
 		}
 
-		movie = await movieRepository.CreateAsync(rank, title, year, storyLine, genre);
+		movie = await movieRepository.Create(rank, title, year, storyLine, genre);
 
 		await dbContext.SaveChangesAsync();
 
 		return movie;
 	}
 
-	public async Task UpdateAsync(Movie target, int rank, string title, int year, string storyLine, Guid genreId) {
+	public async Task Update(Movie target, int rank, string title, int year, string storyLine, Guid genreId) {
 		var movieExists = await dbContext.Movies.AnyAsync(movie => movie.Title == title && movie.Id != target.Id);
 		if (movieExists) {
 			throw ApiException.Builder().Build(ErrorCode.MovieAlreadyExists, new { title });
@@ -56,7 +56,7 @@ public class MovieService {
 		await dbContext.SaveChangesAsync();
 	}
 
-	public async Task DeleteAsync(Movie movie) {
+	public async Task Delete(Movie movie) {
 		dbContext.Remove(movie);
 
 		foreach (var movieActor in movie.MovieActors) {

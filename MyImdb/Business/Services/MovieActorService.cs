@@ -12,22 +12,22 @@ public class MovieActorService {
 		this.dbContext = dbContext;
 	}
 
-	public async Task<List<Movie>> SelectMoviesByActorIdAsync(Guid id, int n = 20) {
-		return await actorRepository.SelectMoviesByActorIdAsync(id, n);
+	public async Task<List<Movie>> SelectMoviesByActorId(Guid id, int n = 20) {
+		return await actorRepository.SelectMoviesByActorId(id, n);
 	}
 
-	public async Task<List<Actor>> SelectActorsByMovieIdAsync(Guid id, int n = 20) {
-		return await actorRepository.SelectActorsByMovieIdAsync(id, n);
+	public async Task<List<Actor>> SelectActorsByMovieId(Guid id, int n = 20) {
+		return await actorRepository.SelectActorsByMovieId(id, n);
 	}
 
-	public async Task LinkMovieToActorAsync(Guid movieId, Guid actorId) {
-		await actorRepository.LinkMovieToActorAsync(movieId, actorId);
+	public async Task LinkMovieToActor(Guid movieId, Guid actorId) {
+		await actorRepository.LinkMovieToActor(movieId, actorId);
 
 		await dbContext.SaveChangesAsync();
 	}
 
-	public async Task UnlinkMovieFromActorAsync(Guid movieId, Guid actorId) {
-		await actorRepository.UnlinkMovieFromActorAsync(movieId, actorId);
+	public async Task UnlinkMovieFromActor(Guid movieId, Guid actorId) {
+		await actorRepository.UnlinkMovieFromActor(movieId, actorId);
 
 		await dbContext.SaveChangesAsync();
 	}

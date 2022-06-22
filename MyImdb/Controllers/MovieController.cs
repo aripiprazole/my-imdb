@@ -27,43 +27,43 @@ public class MovieController {
 
 	[HttpGet("{id:guid}")]
 	public async Task<MovieModel> Get(Guid id) {
-		var movie = await movieService.SelectByIdAsync(id);
+		var movie = await movieService.SelectById(id);
 
 		return modelConverter.ToModel(movie);
 	}
 
 	[HttpGet]
 	public async Task<List<MovieModel>> List(int n = 20) {
-		var movies = await movieService.SelectTopNAsync(n);
+		var movies = await movieService.SelectTopN(n);
 
 		return movies.ConvertAll(modelConverter.ToModel);
 	}
 
 	[HttpGet("{id:guid}/actors")]
 	public async Task<List<ActorModel>> ListActors(Guid id, int n = 20) {
-		var actors = await movieActorService.SelectActorsByMovieIdAsync(id, n);
+		var actors = await movieActorService.SelectActorsByMovieId(id, n);
 
 		return actors.ConvertAll(modelConverter.ToModel);
 	}
 
 	[HttpPost("{id:guid}/actors")]
 	public async Task LinkMovie(Guid id, LinkActorAndMovieData request) {
-		var movie = await movieService.SelectByIdAsync(id);
-		var actor = await actorService.SelectByIdAsync(request.TargetActorId);
+		var movie = await movieService.SelectById(id);
+		var actor = await actorService.SelectById(request.TargetActorId);
 
-		await movieActorService.LinkMovieToActorAsync(movie.Id, actor.Id);
+		await movieActorService.LinkMovieToActor(movie.Id, actor.Id);
 	}
 
 	[HttpDelete("{id:guid}/actors")]
 	public async Task UnlinkMovie(Guid id, LinkActorAndMovieData request) {
-		var movie = await movieService.SelectByIdAsync(id);
-		var actor = await actorService.SelectByIdAsync(request.TargetActorId);
+		var movie = await movieService.SelectById(id);
+		var actor = await actorService.SelectById(request.TargetActorId);
 
-		await movieActorService.UnlinkMovieFromActorAsync(movie.Id, actor.Id);
+		await movieActorService.UnlinkMovieFromActor(movie.Id, actor.Id);
 	}
 
 	public async Task<MovieModel> Create(MovieData request) {
-		var movie = await movieService.CreateAsync(
+		var movie = await movieService.Create(
 			request.Rank,
 			request.Title,
 			request.Year,
@@ -76,9 +76,9 @@ public class MovieController {
 
 	[HttpPut("{id:guid}")]
 	public async Task<MovieModel> Update(Guid id, MovieData request) {
-		var movie = await movieService.SelectByIdAsync(id);
+		var movie = await movieService.SelectById(id);
 
-		await movieService.UpdateAsync(
+		await movieService.Update(
 			movie,
 			request.Rank,
 			request.Title,
@@ -92,8 +92,8 @@ public class MovieController {
 
 	[HttpDelete("{id:guid}")]
 	public async Task Delete(Guid id) {
-		var movie = await movieService.SelectByIdAsync(id);
+		var movie = await movieService.SelectById(id);
 
-		await movieService.DeleteAsync(movie);
+		await movieService.Delete(movie);
 	}
 }

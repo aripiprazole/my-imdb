@@ -16,29 +16,29 @@ public class GenreService {
 		this.dbContext = dbContext;
 	}
 
-	public async Task<Genre> SelectByIdAsync(Guid id) {
-		return await genreRepository.SelectByIdAsync(id)
+	public async Task<Genre> SelectById(Guid id) {
+		return await genreRepository.SelectById(id)
 		       ?? throw ApiException.Builder().Build(ErrorCode.GenreNotFound, new { id });
 	}
 
-	public async Task<List<Genre>> SelectTopNAsync(int n = 20) {
-		return await genreRepository.SelectTopNAsync(n);
+	public async Task<List<Genre>> SelectTopN(int n = 20) {
+		return await genreRepository.SelectTopN(n);
 	}
 
-	public async Task<Genre> CreateAsync(string name) {
-		var genre = await genreRepository.SelectByNameAsync(name);
+	public async Task<Genre> Create(string name) {
+		var genre = await genreRepository.SelectByName(name);
 		if (genre != null) {
 			throw ApiException.Builder().Build(ErrorCode.GenreNotFound, new { name });
 		}
 
-		genre = await genreRepository.CreateAsync(name);
+		genre = await genreRepository.Create(name);
 
 		await dbContext.SaveChangesAsync();
 
 		return genre;
 	}
 
-	public async Task UpdateAsync(Genre target, string name) {
+	public async Task Update(Genre target, string name) {
 		var genreExists = await dbContext.Genres.AnyAsync(genre => genre.Name == name && genre.Id != target.Id);
 		if (genreExists) {
 			throw ApiException.Builder().Build(ErrorCode.GenreAlreadyExists, new { name });
@@ -49,7 +49,7 @@ public class GenreService {
 		await dbContext.SaveChangesAsync();
 	}
 
-	public async Task DeleteAsync(Genre genre) {
+	public async Task Delete(Genre genre) {
 		var movies = await movieRepository.SelectByGenreId(genre.Id);
 
 		dbContext.RemoveRange(movies);

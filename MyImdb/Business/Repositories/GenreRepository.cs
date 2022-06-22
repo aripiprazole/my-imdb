@@ -10,11 +10,11 @@ public class GenreRepository {
 		this.dbContext = dbContext;
 	}
 
-	public async Task<Genre?> SelectByIdAsync(Guid id) {
+	public async Task<Genre?> SelectById(Guid id) {
 		return await dbContext.Genres.FirstOrDefaultAsync(genre => genre.Id == id);
 	}
 
-	public async Task<List<Genre>> SelectTopNAsync(int n = 20) {
+	public async Task<List<Genre>> SelectTopN(int n = 20) {
 		return await dbContext.Genres
 			.OrderBy(genre => genre.Name)
 			.AsQueryable()
@@ -22,7 +22,7 @@ public class GenreRepository {
 			.ToListAsync();
 	}
 
-	public async Task<Genre> CreateAsync(string name) {
+	public async Task<Genre> Create(string name) {
 		var genre = new Genre { Id = Guid.NewGuid(), Name = name };
 
 		await dbContext.AddAsync(genre);
@@ -30,7 +30,7 @@ public class GenreRepository {
 		return genre;
 	}
 
-	public async Task<Genre?> SelectByNameAsync(string name) {
+	public async Task<Genre?> SelectByName(string name) {
 		return await dbContext.Genres.FirstOrDefaultAsync(genre => genre.Name == name);
 	}
 }

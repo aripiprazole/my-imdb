@@ -27,44 +27,44 @@ public class ActorController {
 
 	[HttpGet("{id:guid}")]
 	public async Task<ActorModel> Get(Guid id) {
-		var actor = await actorService.SelectByIdAsync(id);
+		var actor = await actorService.SelectById(id);
 
 		return modelConverter.ToModel(actor);
 	}
 
 	[HttpGet]
 	public async Task<List<ActorModel>> List(int n = 20) {
-		var actors = await actorService.SelectTopNAsync(n);
+		var actors = await actorService.SelectTopN(n);
 
 		return actors.ConvertAll(modelConverter.ToModel);
 	}
 
 	[HttpGet("{id:guid}/movies")]
 	public async Task<List<MovieModel>> ListMovies(Guid id, int n = 20) {
-		var movies = await movieActorService.SelectMoviesByActorIdAsync(id, n);
+		var movies = await movieActorService.SelectMoviesByActorId(id, n);
 
 		return movies.ConvertAll(modelConverter.ToModel);
 	}
 
 	[HttpPost("{id:guid}/movies")]
 	public async Task LinkMovie(Guid id, LinkMovieAndActorData request) {
-		var movie = await movieService.SelectByIdAsync(request.TargetMovieId);
-		var actor = await actorService.SelectByIdAsync(id);
+		var movie = await movieService.SelectById(request.TargetMovieId);
+		var actor = await actorService.SelectById(id);
 
-		await movieActorService.LinkMovieToActorAsync(movie.Id, actor.Id);
+		await movieActorService.LinkMovieToActor(movie.Id, actor.Id);
 	}
 
 	[HttpDelete("{id:guid}/movies")]
 	public async Task UnlinkMovie(Guid id, LinkMovieAndActorData request) {
-		var movie = await movieService.SelectByIdAsync(request.TargetMovieId);
-		var actor = await actorService.SelectByIdAsync(id);
+		var movie = await movieService.SelectById(request.TargetMovieId);
+		var actor = await actorService.SelectById(id);
 
-		await movieActorService.UnlinkMovieFromActorAsync(movie.Id, actor.Id);
+		await movieActorService.UnlinkMovieFromActor(movie.Id, actor.Id);
 	}
 
 	[HttpPost]
 	public async Task<ActorModel> Create(ActorData request) {
-		var actor = await actorService.CreateAsync(
+		var actor = await actorService.Create(
 			request.Name,
 			request.Birthplace
 		);
@@ -74,9 +74,9 @@ public class ActorController {
 
 	[HttpPut("{id:guid}")]
 	public async Task<ActorModel> Update(Guid id, ActorData request) {
-		var actor = await actorService.SelectByIdAsync(id);
+		var actor = await actorService.SelectById(id);
 
-		await actorService.UpdateAsync(
+		await actorService.Update(
 			actor,
 			request.Name,
 			request.Birthplace
@@ -87,8 +87,8 @@ public class ActorController {
 
 	[HttpDelete("{id:guid}")]
 	public async Task Delete(Guid id) {
-		var actor = await actorService.SelectByIdAsync(id);
+		var actor = await actorService.SelectById(id);
 
-		await actorService.DeleteAsync(actor);
+		await actorService.Delete(actor);
 	}
 }

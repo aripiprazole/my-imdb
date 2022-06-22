@@ -10,7 +10,7 @@ public class MovieActorRepository {
 		this.dbContext = dbContext;
 	}
 
-	public async Task<List<Actor>> SelectActorsByMovieIdAsync(Guid id, int n = 20) {
+	public async Task<List<Actor>> SelectActorsByMovieId(Guid id, int n = 20) {
 		var pivots = await dbContext.MovieActors
 			.Include(pivot => pivot.Actor)
 			.Include(pivot => pivot.Actor.MovieActors)
@@ -23,7 +23,7 @@ public class MovieActorRepository {
 		return pivots.ConvertAll(pivot => pivot.Actor);
 	}
 
-	public async Task<List<Movie>> SelectMoviesByActorIdAsync(Guid id, int n = 20) {
+	public async Task<List<Movie>> SelectMoviesByActorId(Guid id, int n = 20) {
 		var pivots = await dbContext.MovieActors
 			.Include(pivot => pivot.Actor)
 			.Include(pivot => pivot.Actor.MovieActors)
@@ -36,13 +36,13 @@ public class MovieActorRepository {
 		return pivots.ConvertAll(pivot => pivot.Movie);
 	}
 
-	public async Task LinkMovieToActorAsync(Guid movieId, Guid actorId) {
+	public async Task LinkMovieToActor(Guid movieId, Guid actorId) {
 		var movieActor = new MovieActor { MovieId = movieId, ActorId = actorId };
 
 		await dbContext.AddAsync(movieActor);
 	}
 
-	public async Task UnlinkMovieFromActorAsync(Guid movieId, Guid actorId) {
+	public async Task UnlinkMovieFromActor(Guid movieId, Guid actorId) {
 		var movieActor = await dbContext.MovieActors
 			.FirstOrDefaultAsync(pivot => pivot.MovieId == movieId && pivot.ActorId == actorId);
 

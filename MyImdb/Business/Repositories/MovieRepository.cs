@@ -18,7 +18,7 @@ public class MovieRepository {
 			.ToListAsync();
 	}
 
-	public async Task<List<Movie>> SelectTopNAsync(int n = 20) {
+	public async Task<List<Movie>> SelectTopN(int n = 20) {
 		return await dbContext.Movies
 			.Include(movie => movie.Genre)
 			.Include(movie => movie.MovieActors)
@@ -28,21 +28,21 @@ public class MovieRepository {
 			.ToListAsync();
 	}
 
-	public async Task<Movie?> SelectByTitleAsync(string title) {
+	public async Task<Movie?> SelectByTitle(string title) {
 		return await dbContext.Movies
 			.Include(movie => movie.Genre)
 			.Include(movie => movie.MovieActors)
 			.FirstOrDefaultAsync(movie => movie.Title == title);
 	}
 
-	public async Task<Movie?> SelectByIdAsync(Guid id) {
+	public async Task<Movie?> SelectById(Guid id) {
 		return await dbContext.Movies
 			.Include(movie => movie.Genre)
 			.Include(movie => movie.MovieActors)
 			.FirstOrDefaultAsync(movie => movie.Id == id);
 	}
 
-	public async Task<Movie> CreateAsync(int rank, string title, int year, string storyLine, Genre genre) {
+	public async Task<Movie> Create(int rank, string title, int year, string storyLine, Genre genre) {
 		var movie = new Movie {
 			Id = Guid.NewGuid(),
 			Rank = rank,

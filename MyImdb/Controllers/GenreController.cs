@@ -18,38 +18,38 @@ public class GenreController {
 
 	[HttpGet("{id:guid}")]
 	public async Task<GenreModel> Get(Guid id) {
-		var genre = await genreService.SelectByIdAsync(id);
+		var genre = await genreService.SelectById(id);
 
 		return modelConverter.ToModel(genre);
 	}
 
 	[HttpGet]
 	public async Task<List<GenreModel>> List(int n = 20) {
-		var genres = await genreService.SelectTopNAsync(n);
+		var genres = await genreService.SelectTopN(n);
 
 		return genres.ConvertAll(modelConverter.ToModel);
 	}
 
 	[HttpPost]
 	public async Task<GenreModel> Create(GenreData request) {
-		var genre = await genreService.CreateAsync(request.Name);
+		var genre = await genreService.Create(request.Name);
 
 		return modelConverter.ToModel(genre);
 	}
 
 	[HttpPut("{id:guid}")]
 	public async Task<GenreModel> Update(Guid id, GenreData request) {
-		var genre = await genreService.SelectByIdAsync(id);
+		var genre = await genreService.SelectById(id);
 
-		await genreService.UpdateAsync(genre, request.Name);
+		await genreService.Update(genre, request.Name);
 
 		return modelConverter.ToModel(genre);
 	}
 
 	[HttpDelete("{id:guid}")]
 	public async Task Delete(Guid id) {
-		var genre = await genreService.SelectByIdAsync(id);
+		var genre = await genreService.SelectById(id);
 
-		await genreService.DeleteAsync(genre);
+		await genreService.Delete(genre);
 	}
 }
