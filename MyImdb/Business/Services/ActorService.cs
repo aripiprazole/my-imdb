@@ -15,7 +15,7 @@ public class ActorService {
 
 	public async Task<Actor> SelectByIdAsync(Guid id) {
 		return await actorRepository.SelectByIdAsync(id) ??
-		       throw ApiException.Builder().Build(ErrorCode.ActorNotFound, new { id = id });
+		       throw ApiException.Builder().Build(ErrorCode.ActorNotFound, new { id });
 	}
 
 	public async Task<List<Actor>> SelectTopNAsync(int n = 20) {

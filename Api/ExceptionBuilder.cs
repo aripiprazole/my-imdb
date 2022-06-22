@@ -22,8 +22,9 @@ public class ExceptionBuilder {
 	private static Dictionary<string, string> getDetailsDictionary(object details) {
 		var dictionary = new Dictionary<string, string>();
 
-		foreach (var property in details.GetType().GetProperties())
+		foreach (var property in details.GetType().GetProperties()) {
 			dictionary[property.Name] = property.GetValue(details, null)?.ToString() ?? "null";
+		}
 
 		return dictionary;
 	}
