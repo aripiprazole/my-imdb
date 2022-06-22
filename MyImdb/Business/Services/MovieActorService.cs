@@ -19,4 +19,16 @@ public class MovieActorService {
 	public async Task<List<Actor>> SelectActorsByMovieIdAsync(Guid id, int n = 20) {
 		return await actorRepository.SelectActorsByMovieIdAsync(id, n);
 	}
+
+	public async Task LinkMovieToActor(Guid movieId, Guid actorId) {
+		await actorRepository.LinkMovieToActorAsync(movieId, actorId);
+
+		await dbContext.SaveChangesAsync();
+	}
+
+	public async Task UnlinkMovieFromActor(Guid movieId, Guid actorId) {
+		await actorRepository.UnlinkMovieFromActorAsync(movieId, actorId);
+
+		await dbContext.SaveChangesAsync();
+	}
 }

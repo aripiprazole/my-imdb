@@ -22,9 +22,25 @@ public class MovieActorRepository {
 	public async Task<List<Movie>> SelectMoviesByActorIdAsync(Guid id, int n = 20) {
 		var pivots = await dbContext.MovieActors
 			.Include(pivot => pivot.Movie)
+			.Include(pivot => pivot.Movie.Genre)
 			.Where(pivot => pivot.ActorId == id)
 			.ToListAsync();
 
 		return pivots.ConvertAll(pivot => pivot.Movie);
+	}
+
+	public async Task LinkMovieToActorAsync(Guid movieId, Guid actorId) {
+		var movieActor = new MovieActor { MovieId = movieId, ActorId = actorId };
+
+		await dbContext.AddAsync(movieActor);
+	}
+
+	public async Task UnlinkMovieFromActorAsync(Guid movieId, Guid actorId) {
+		var movieActor = await dbContext.MovieActors
+			.FirstOrDefaultAsync(pivot => pivot.MovieId == movieId && pivot.ActorId == actorId);
+
+		if (movieActor == null) return;
+
+		dbContext.Remove(movieActor);
 	}
 }

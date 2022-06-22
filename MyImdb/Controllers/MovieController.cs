@@ -43,6 +43,16 @@ public class MovieController {
 		return actors.ConvertAll(modelConverter.ToModel);
 	}
 
+	[HttpPost("{id:guid}/actors")]
+	public async Task LinkMovie(Guid id, LinkActorAndMovieData request) {
+		await movieActorService.LinkMovieToActor(id, request.TargetActorId);
+	}
+
+	[HttpDelete("{id:guid}/actors")]
+	public async Task UnlinkMovie(Guid id, LinkActorAndMovieData request) {
+		await movieActorService.UnlinkMovieFromActor(id, request.TargetActorId);
+	}
+
 	public async Task<MovieModel> Create(MovieData request) {
 		var movie = await movieService.CreateAsync(
 			request.Rank,
