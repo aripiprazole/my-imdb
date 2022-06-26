@@ -30,7 +30,7 @@ public class HandleExceptionFilter : IExceptionFilter {
 
 			var code = BitConverter.ToString(rawCode).Replace("-", "");
 
-			logger.LogError(context.Exception, "Unhandled exception --- {code}", code);
+			logger.LogError(context.Exception, "Unhandled exception --- {}", code);
 
 			var error = new {
 				Message = $"An unexpected exception occurred. Please contact the support and provide the code {code}",

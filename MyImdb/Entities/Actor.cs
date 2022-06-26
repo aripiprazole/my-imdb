@@ -20,12 +20,12 @@ public class MovieActor {
 	public Guid Id { get; set; }
 
 	[Required]
-	public Guid MovieId { get; set; } = default!;
+	public Guid MovieId { get; set; }
 
 	public Movie Movie { get; set; } = default!;
 
 	[Required]
-	public Guid ActorId { get; set; } = default!;
+	public Guid ActorId { get; set; }
 
 	public Actor Actor { get; set; } = default!;
 }
