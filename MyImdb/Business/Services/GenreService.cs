@@ -18,7 +18,7 @@ public class GenreService {
 
 	public async Task<Genre> SelectById(Guid id) {
 		return await genreRepository.SelectById(id)
-		       ?? throw ApiException.Builder().Build(ErrorCode.GenreNotFound, new { id });
+		       ?? throw ApiException.Builder().Build(ErrorCodes.GenreNotFound, new { id });
 	}
 
 	public async Task<List<Genre>> SelectTopN(int n = 20) {
@@ -28,7 +28,7 @@ public class GenreService {
 	public async Task<Genre> Create(string name) {
 		var genre = await genreRepository.SelectByName(name);
 		if (genre != null) {
-			throw ApiException.Builder().Build(ErrorCode.GenreNotFound, new { name });
+			throw ApiException.Builder().Build(ErrorCodes.GenreNotFound, new { name });
 		}
 
 		genre = await genreRepository.Create(name);
@@ -41,7 +41,7 @@ public class GenreService {
 	public async Task Update(Genre target, string name) {
 		var genreExists = await dbContext.Genres.AnyAsync(genre => genre.Name == name && genre.Id != target.Id);
 		if (genreExists) {
-			throw ApiException.Builder().Build(ErrorCode.GenreAlreadyExists, new { name });
+			throw ApiException.Builder().Build(ErrorCodes.GenreAlreadyExists, new { name });
 		}
 
 		target.Name = name;

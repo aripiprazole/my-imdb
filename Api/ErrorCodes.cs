@@ -1,6 +1,6 @@
 ﻿namespace Api;
 
-public enum ErrorCode {
+public enum ErrorCodes {
 	Unknown,
 	GenreNotFound,
 	GenreAlreadyExists,

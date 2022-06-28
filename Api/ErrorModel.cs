@@ -7,13 +7,13 @@ public class ErrorModel {
 	private string codeStr { get; set; } = default!;
 
 	[JsonIgnore]
-	public ErrorCode Code {
+	public ErrorCodes Code {
 		get {
-			ErrorCode code;
+			ErrorCodes code;
 			try {
-				code = Enum.Parse<ErrorCode>(codeStr);
+				code = Enum.Parse<ErrorCodes>(codeStr);
 			} catch {
-				code = ErrorCode.Unknown;
+				code = ErrorCodes.Unknown;
 			}
 
 			return code;

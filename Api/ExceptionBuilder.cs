@@ -1,14 +1,14 @@
 ﻿namespace Api;
 
 public class ExceptionBuilder {
-	public ApiException Build(ErrorCode code, object? details = null) {
+	public ApiException Build(ErrorCodes code, object? details = null) {
 		var message = code switch {
-			ErrorCode.Unknown => "An unknown error occurred",
-			ErrorCode.GenreNotFound => "Genre not found",
-			ErrorCode.GenreAlreadyExists => "Genre already exists",
-			ErrorCode.MovieNotFound => "Movie not found",
-			ErrorCode.MovieAlreadyExists => "Movie already exists",
-			ErrorCode.ActorNotFound => "Actor not found",
+			ErrorCodes.Unknown => "An unknown error occurred",
+			ErrorCodes.GenreNotFound => "Genre not found",
+			ErrorCodes.GenreAlreadyExists => "Genre already exists",
+			ErrorCodes.MovieNotFound => "Movie not found",
+			ErrorCodes.MovieAlreadyExists => "Movie already exists",
+			ErrorCodes.ActorNotFound => "Actor not found",
 			_ => ""
 		};
 
