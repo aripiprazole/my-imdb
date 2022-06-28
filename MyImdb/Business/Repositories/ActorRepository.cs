@@ -20,7 +20,6 @@ public class ActorRepository {
 		return await dbContext.Actors
 			.Include(actor => actor.MovieActors)
 			.OrderBy(actor => actor.Name)
-			.AsQueryable()
 			.Take(n)
 			.ToListAsync();
 	}

@@ -23,7 +23,6 @@ public class MovieRepository {
 			.Include(movie => movie.Genre)
 			.Include(movie => movie.MovieActors)
 			.OrderBy(movie => movie.Title)
-			.AsQueryable()
 			.Take(n)
 			.ToListAsync();
 	}

@@ -17,7 +17,6 @@ public class GenreRepository {
 	public async Task<List<Genre>> SelectTopN(int n = 20) {
 		return await dbContext.Genres
 			.OrderBy(genre => genre.Name)
-			.AsQueryable()
 			.Take(n)
 			.ToListAsync();
 	}
