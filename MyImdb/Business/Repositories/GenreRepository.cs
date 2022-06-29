@@ -19,7 +19,7 @@ public class GenreRepository {
 	}
 
 	public async Task<Genre> Create(string name) {
-		var genre = new Genre {
+		var genre = new Genre() {
 			Id = Guid.NewGuid(),
 			Name = name,
 		};

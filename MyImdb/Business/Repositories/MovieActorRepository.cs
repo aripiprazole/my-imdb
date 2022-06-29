@@ -35,7 +35,7 @@ public class MovieActorRepository {
 	}
 
 	public async Task LinkMovieToActor(Guid movieId, Guid actorId) {
-		var movieActor = new MovieActor {
+		var movieActor = new MovieActor() {
 			MovieId = movieId,
 			ActorId = actorId,
 		};

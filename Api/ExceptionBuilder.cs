@@ -13,7 +13,7 @@ public class ExceptionBuilder {
 		};
 
 		return new ApiException(
-			new ErrorModel {
+			new ErrorModel() {
 				Code = code,
 				Message = message,
 				Details = details == null ? new Dictionary<string, string>() : getDetailsDictionary(details),

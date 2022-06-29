@@ -5,14 +5,14 @@ namespace MyImdb.Business.Services;
 
 public class ModelConverter {
 	public GenreModel ToModel(Genre genre) {
-		return new GenreModel {
+		return new GenreModel() {
 			Id = genre.Id,
 			Name = genre.Name,
 		};
 	}
 
 	public MovieModel ToModel(Movie movie) {
-		return new MovieModel {
+		return new MovieModel() {
 			Id = movie.Id,
 			Title = movie.Title,
 			Rank = movie.Rank,
@@ -22,7 +22,7 @@ public class ModelConverter {
 	}
 
 	public ActorModel ToModel(Actor actor) {
-		return new ActorModel {
+		return new ActorModel() {
 			Id = actor.Id,
 			Name = actor.Name,
 			Birthplace = actor.Birthplace,

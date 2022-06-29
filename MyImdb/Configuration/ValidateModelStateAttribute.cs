@@ -8,7 +8,7 @@ namespace MyImdb.Configuration;
 
 public class ValidateModelStateAttribute : ActionFilterAttribute {
 	private static readonly DefaultContractResolver sharedContractResolver = new() {
-		NamingStrategy = new CamelCaseNamingStrategy {
+		NamingStrategy = new CamelCaseNamingStrategy() {
 			ProcessDictionaryKeys = true,
 		},
 	};
@@ -16,7 +16,7 @@ public class ValidateModelStateAttribute : ActionFilterAttribute {
 	private static readonly JsonSerializerSettings serializerSettings;
 
 	static ValidateModelStateAttribute() {
-		serializerSettings = new JsonSerializerSettings {
+		serializerSettings = new JsonSerializerSettings() {
 			ContractResolver = sharedContractResolver,
 		};
 	}
