@@ -53,6 +53,8 @@ builder.Services.AddControllersWithViews(
 
 var app = builder.Build();
 
+UpdateDatabase(app);
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment()) {
 	app.UseExceptionHandler("/Home/Error");
@@ -74,3 +76,12 @@ app.UseEndpoints(
 );
 
 app.Run();
+
+void UpdateDatabase(IHost host) {
+	using var scope = host.Services.CreateScope();
+
+	var services = scope.ServiceProvider;
+	var context = services.GetRequiredService<AppDbContext>();
+
+	context.Database.Migrate();
+}
