@@ -78,14 +78,7 @@ public class MovieController {
 	public async Task<MovieModel> Update(Guid id, MovieData request) {
 		var movie = await movieService.SelectById(id);
 
-		await movieService.Update(
-			movie,
-			request.Rank,
-			request.Title,
-			request.Year,
-			request.StoryLine,
-			request.GenreId
-		);
+		await movieService.Update(movie, request.Rank, request.Title, request.Year, request.StoryLine, request.GenreId);
 
 		return modelConverter.ToModel(movie);
 	}

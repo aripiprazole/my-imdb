@@ -19,7 +19,7 @@ public class HandleExceptionFilter : IExceptionFilter {
 			logger.LogWarning(apiException, "API Exception caught");
 
 			context.Result = new JsonResult(apiException.Error, JsonConvert.DefaultSettings) {
-				StatusCode = (int)HttpStatusCode.UnprocessableEntity
+				StatusCode = (int)HttpStatusCode.UnprocessableEntity,
 			};
 			context.ExceptionHandled = true;
 		} else {
@@ -34,11 +34,11 @@ public class HandleExceptionFilter : IExceptionFilter {
 
 			var error = new {
 				Message = $"An unexpected exception occurred. Please contact the support and provide the code {code}",
-				ExceptionCode = code
+				ExceptionCode = code,
 			};
 
 			context.Result = new JsonResult(error, JsonConvert.DefaultSettings) {
-				StatusCode = (int)HttpStatusCode.InternalServerError
+				StatusCode = (int)HttpStatusCode.InternalServerError,
 			};
 		}
 	}

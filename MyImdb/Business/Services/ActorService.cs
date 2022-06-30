@@ -14,8 +14,13 @@ public class ActorService {
 	}
 
 	public async Task<Actor> SelectById(Guid id) {
-		return await actorRepository.SelectById(id) ??
-		       throw ApiException.Builder().Build(ErrorCodes.ActorNotFound, new { id });
+		return await actorRepository.SelectById(id) ?? throw ApiException.Builder()
+			.Build(
+				ErrorCodes.ActorNotFound,
+				new {
+					id,
+				}
+			);
 	}
 
 	public async Task<List<Actor>> SelectTopN(int n = 20) {

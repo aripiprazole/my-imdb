@@ -64,10 +64,7 @@ public class ActorController {
 
 	[HttpPost]
 	public async Task<ActorModel> Create(ActorData request) {
-		var actor = await actorService.Create(
-			request.Name,
-			request.Birthplace
-		);
+		var actor = await actorService.Create(request.Name, request.Birthplace);
 
 		return modelConverter.ToModel(actor);
 	}
@@ -76,11 +73,7 @@ public class ActorController {
 	public async Task<ActorModel> Update(Guid id, ActorData request) {
 		var actor = await actorService.SelectById(id);
 
-		await actorService.Update(
-			actor,
-			request.Name,
-			request.Birthplace
-		);
+		await actorService.Update(actor, request.Name, request.Birthplace);
 
 		return modelConverter.ToModel(actor);
 	}

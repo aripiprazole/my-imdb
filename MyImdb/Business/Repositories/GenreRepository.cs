@@ -15,14 +15,14 @@ public class GenreRepository {
 	}
 
 	public async Task<List<Genre>> SelectTopN(int n = 20) {
-		return await dbContext.Genres
-			.OrderBy(genre => genre.Name)
-			.Take(n)
-			.ToListAsync();
+		return await dbContext.Genres.OrderBy(genre => genre.Name).Take(n).ToListAsync();
 	}
 
 	public async Task<Genre> Create(string name) {
-		var genre = new Genre { Id = Guid.NewGuid(), Name = name };
+		var genre = new Genre {
+			Id = Guid.NewGuid(),
+			Name = name,
+		};
 
 		await dbContext.AddAsync(genre);
 

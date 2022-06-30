@@ -6,5 +6,5 @@ public enum ErrorCodes {
 	GenreAlreadyExists,
 	MovieNotFound,
 	MovieAlreadyExists,
-	ActorNotFound
+	ActorNotFound,
 }

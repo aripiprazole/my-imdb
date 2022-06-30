@@ -12,6 +12,8 @@ public class SystemController : Controller {
 
 		var version = name.Version!;
 
-		return new { version = $"{version.Major}.{version.Minor}.{version.Build}" };
+		return new {
+			version = $"{version.Major}.{version.Minor}.{version.Build}",
+		};
 	}
 }

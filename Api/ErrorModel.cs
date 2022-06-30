@@ -26,10 +26,6 @@ public class ErrorModel {
 	public Dictionary<string, string> Details { get; set; } = default!;
 
 	public override string ToString() {
-		return "ErrorModel{" +
-		       "Code='" + Code + "'" +
-		       ", Message='" + Message + "'" +
-		       ", Details=" + Details +
-		       '}';
+		return "ErrorModel{" + "Code='" + Code + "'" + ", Message='" + Message + "'" + ", Details=" + Details + '}';
 	}
 }

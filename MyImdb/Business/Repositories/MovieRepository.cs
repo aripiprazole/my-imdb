@@ -11,16 +11,14 @@ public class MovieRepository {
 	}
 
 	public Task<List<Movie>> SelectByGenreId(Guid genreId) {
-		return dbContext.Movies
-			.Include(movie => movie.Genre)
+		return dbContext.Movies.Include(movie => movie.Genre)
 			.Include(movie => movie.MovieActors)
 			.Where(movie => movie.GenreId == genreId)
 			.ToListAsync();
 	}
 
 	public async Task<List<Movie>> SelectTopN(int n = 20) {
-		return await dbContext.Movies
-			.Include(movie => movie.Genre)
+		return await dbContext.Movies.Include(movie => movie.Genre)
 			.Include(movie => movie.MovieActors)
 			.OrderBy(movie => movie.Title)
 			.Take(n)
@@ -28,28 +26,26 @@ public class MovieRepository {
 	}
 
 	public async Task<Movie?> SelectByTitle(string title) {
-		return await dbContext.Movies
-			.Include(movie => movie.Genre)
+		return await dbContext.Movies.Include(movie => movie.Genre)
 			.Include(movie => movie.MovieActors)
 			.FirstOrDefaultAsync(movie => movie.Title == title);
 	}
 
 	public async Task<Movie?> SelectById(Guid id) {
-		return await dbContext.Movies
-			.Include(movie => movie.Genre)
+		return await dbContext.Movies.Include(movie => movie.Genre)
 			.Include(movie => movie.MovieActors)
 			.FirstOrDefaultAsync(movie => movie.Id == id);
 	}
 
 	public async Task<Movie> Create(int rank, string title, int year, string storyLine, Genre genre) {
-		var movie = new Movie {
+		var movie = new Movie() {
 			Id = Guid.NewGuid(),
 			Rank = rank,
 			Title = title,
 			Year = year,
 			StoryLine = storyLine,
 			CreationDate = DateTimeOffset.Now,
-			GenreId = genre.Id
+			GenreId = genre.Id,
 		};
 
 		await dbContext.AddAsync(movie);

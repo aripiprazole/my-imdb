@@ -6,8 +6,7 @@
 }
 
 <div class="p-3">
-	@if (ViewBag.Message != null)
-	{
+	@if (ViewBag.Message != null) {
 		<div class="alert alert-info">
 			<p>@ViewBag.Message</p>
 		</div>
@@ -21,8 +20,7 @@
 			<th>Title</th>
 			<th>Year</th>
 		</tr>
-		@foreach (var movie in Model)
-		{
+		@foreach (var movie in Model) {
 			<tr>
 				<td>@movie.Rank</td>
 				<td>

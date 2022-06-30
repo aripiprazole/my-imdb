@@ -8,13 +8,17 @@ namespace MyImdb.Configuration;
 
 public class ValidateModelStateAttribute : ActionFilterAttribute {
 	private static readonly DefaultContractResolver sharedContractResolver = new() {
-		NamingStrategy = new CamelCaseNamingStrategy { ProcessDictionaryKeys = true }
+		NamingStrategy = new CamelCaseNamingStrategy {
+			ProcessDictionaryKeys = true,
+		},
 	};
 
 	private static readonly JsonSerializerSettings serializerSettings;
 
 	static ValidateModelStateAttribute() {
-		serializerSettings = new JsonSerializerSettings { ContractResolver = sharedContractResolver };
+		serializerSettings = new JsonSerializerSettings {
+			ContractResolver = sharedContractResolver,
+		};
 	}
 
 	public override void OnActionExecuting(ActionExecutingContext context) {
@@ -23,7 +27,7 @@ public class ValidateModelStateAttribute : ActionFilterAttribute {
 		}
 
 		context.Result = new JsonResult(new SerializableError(context.ModelState), serializerSettings) {
-			StatusCode = (int)HttpStatusCode.BadRequest
+			StatusCode = (int)HttpStatusCode.BadRequest,
 		};
 	}
 }

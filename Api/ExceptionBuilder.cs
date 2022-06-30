@@ -9,14 +9,16 @@ public class ExceptionBuilder {
 			ErrorCodes.MovieNotFound => "Movie not found",
 			ErrorCodes.MovieAlreadyExists => "Movie already exists",
 			ErrorCodes.ActorNotFound => "Actor not found",
-			_ => ""
+			_ => "",
 		};
 
-		return new ApiException(new ErrorModel {
-			Code = code,
-			Message = message,
-			Details = details == null ? new Dictionary<string, string>() : getDetailsDictionary(details)
-		});
+		return new ApiException(
+			new ErrorModel {
+				Code = code,
+				Message = message,
+				Details = details == null ? new Dictionary<string, string>() : getDetailsDictionary(details),
+			}
+		);
 	}
 
 	private static Dictionary<string, string> getDetailsDictionary(object details) {
