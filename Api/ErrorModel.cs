@@ -1,31 +1,31 @@
 ﻿using Newtonsoft.Json;
 
-namespace Api;
+namespace Api {
+	public class ErrorModel {
+		[JsonProperty("code")]
+		private string codeStr { get; set; } = default!;
 
-public class ErrorModel {
-	[JsonProperty("code")]
-	private string codeStr { get; set; } = default!;
+		[JsonIgnore]
+		public ErrorCodes Code {
+			get {
+				ErrorCodes code;
+				try {
+					code = Enum.Parse<ErrorCodes>(codeStr);
+				} catch {
+					code = ErrorCodes.Unknown;
+				}
 
-	[JsonIgnore]
-	public ErrorCodes Code {
-		get {
-			ErrorCodes code;
-			try {
-				code = Enum.Parse<ErrorCodes>(codeStr);
-			} catch {
-				code = ErrorCodes.Unknown;
+				return code;
 			}
-
-			return code;
+			set => codeStr = value.ToString();
 		}
-		set => codeStr = value.ToString();
-	}
 
-	public string Message { get; set; } = default!;
+		public string Message { get; set; } = default!;
 
-	public Dictionary<string, string> Details { get; set; } = default!;
+		public Dictionary<string, string> Details { get; set; } = default!;
 
-	public override string ToString() {
-		return "ErrorModel{" + "Code='" + Code + "'" + ", Message='" + Message + "'" + ", Details=" + Details + '}';
+		public override string ToString() {
+			return "ErrorModel{" + "Code='" + Code + "'" + ", Message='" + Message + "'" + ", Details=" + Details + '}';
+		}
 	}
 }

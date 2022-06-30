@@ -3,53 +3,53 @@ using Microsoft.AspNetCore.Mvc;
 using MyImdb.Business.Services;
 using MyImdb.Models;
 
-namespace MyImdb.Controllers;
+namespace MyImdb.Controllers {
+	[ApiController]
+	[Route("api/genres")]
+	public class GenreController {
+		private readonly GenreService genreService;
+		private readonly ModelConverter modelConverter;
 
-[ApiController]
-[Route("api/genres")]
-public class GenreController {
-	private readonly GenreService genreService;
-	private readonly ModelConverter modelConverter;
+		public GenreController(GenreService genreService, ModelConverter modelConverter) {
+			this.genreService = genreService;
+			this.modelConverter = modelConverter;
+		}
 
-	public GenreController(GenreService genreService, ModelConverter modelConverter) {
-		this.genreService = genreService;
-		this.modelConverter = modelConverter;
-	}
+		[HttpGet("{id:guid}")]
+		public async Task<GenreModel> Get(Guid id) {
+			var genre = await genreService.SelectById(id);
 
-	[HttpGet("{id:guid}")]
-	public async Task<GenreModel> Get(Guid id) {
-		var genre = await genreService.SelectById(id);
+			return modelConverter.ToModel(genre);
+		}
 
-		return modelConverter.ToModel(genre);
-	}
+		[HttpGet]
+		public async Task<List<GenreModel>> List(int n = 20) {
+			var genres = await genreService.SelectTopN(n);
 
-	[HttpGet]
-	public async Task<List<GenreModel>> List(int n = 20) {
-		var genres = await genreService.SelectTopN(n);
+			return genres.ConvertAll(modelConverter.ToModel);
+		}
 
-		return genres.ConvertAll(modelConverter.ToModel);
-	}
+		[HttpPost]
+		public async Task<GenreModel> Create(GenreData request) {
+			var genre = await genreService.Create(request.Name);
 
-	[HttpPost]
-	public async Task<GenreModel> Create(GenreData request) {
-		var genre = await genreService.Create(request.Name);
+			return modelConverter.ToModel(genre);
+		}
 
-		return modelConverter.ToModel(genre);
-	}
+		[HttpPut("{id:guid}")]
+		public async Task<GenreModel> Update(Guid id, GenreData request) {
+			var genre = await genreService.SelectById(id);
 
-	[HttpPut("{id:guid}")]
-	public async Task<GenreModel> Update(Guid id, GenreData request) {
-		var genre = await genreService.SelectById(id);
+			await genreService.Update(genre, request.Name);
 
-		await genreService.Update(genre, request.Name);
+			return modelConverter.ToModel(genre);
+		}
 
-		return modelConverter.ToModel(genre);
-	}
+		[HttpDelete("{id:guid}")]
+		public async Task Delete(Guid id) {
+			var genre = await genreService.SelectById(id);
 
-	[HttpDelete("{id:guid}")]
-	public async Task Delete(Guid id) {
-		var genre = await genreService.SelectById(id);
-
-		await genreService.Delete(genre);
+			await genreService.Delete(genre);
+		}
 	}
 }

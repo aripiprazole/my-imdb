@@ -5,58 +5,50 @@
 <style>
 	.index-main {
 		display: grid;
-		grid-template-areas: 
-			'content content content sidebar'
-			'footer  footer  footer  sidebar';
-  		gap: 0.75rem;
-  		grid-template-columns: repeat(auto-fit, minmax(21.875rem, 1fr));
-    	grid-template-rows: max-content 1fr;
+		gap: 0.75rem;
+		grid-template-areas:
+		                   'content content content sidebar'
+		                   'footer  footer  footer  sidebar';
+		grid-template-columns: repeat(auto-fit, minmax(21.875rem, 1fr));
+		grid-template-rows: max-content 1fr;
     	
-    	height: 100%;
-	}
-	
-	.index-main main {
-		grid-area: content;
-	}
-	
-	.index-main nav {
-		grid-area: sidebar;
-		background: #eee;
-	}
-	
-	.index-main nav div {
-		padding: 1rem 0;
-		border-bottom: 1px solid #ccc;
-	}
-	
-	.index-main nav a {
-    	text-decoration: none;
-    	display: block;
-    	padding: 0.5rem 0;
-	}
-	
-	.index-main footer {
-		grid-area: footer;
-		flex: 1;
+		height: 100%;
 	}
 
-	.months-movie > *:not(:last-child) {
-		margin-right: 30px; 
-	} 	
+	.index-main main { grid-area: content; }
+
+	.index-main nav {
+		background: #eee;
+		grid-area: sidebar;
+	}
+
+	.index-main nav div {
+		border-bottom: 1px solid #ccc;
+		padding: 1rem 0;
+	}
+
+	.index-main nav a {
+		display: block;
+		padding: 0.5rem 0;
+		text-decoration: none;
+	}
+
+	.index-main footer {
+		flex: 1;
+		grid-area: footer;
+	}
+
+	.months-movie > *:not(:last-child) { margin-right: 30px; }
 
 	.movie {
-		width: 20rem;
-		height: 22rem;
 		background: #ccc;
+		height: 22rem;
+		width: 20rem;
 	}
-	
-	.movie i {
-		font-size: 3rem;
-	}
-	
-	.movie > .title {
-		background: #333;
-	}
+
+	.movie i { font-size: 3rem; }
+
+	.movie > .title { background: #333; }
 </style>
 
 <div class="w-100 h-100 index-main">

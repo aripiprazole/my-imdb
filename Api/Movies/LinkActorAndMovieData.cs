@@ -1,5 +1,5 @@
-﻿namespace Api.Movies;
-
-public class LinkActorAndMovieData {
-	public Guid TargetActorId { get; set; }
+﻿namespace Api.Movies {
+	public class LinkActorAndMovieData {
+		public Guid TargetActorId { get; set; }
+	}
 }

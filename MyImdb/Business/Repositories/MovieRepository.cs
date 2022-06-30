@@ -1,55 +1,55 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyImdb.Entities;
 
-namespace MyImdb.Business.Repositories;
+namespace MyImdb.Business.Repositories {
+	public class MovieRepository {
+		private readonly AppDbContext dbContext;
 
-public class MovieRepository {
-	private readonly AppDbContext dbContext;
+		public MovieRepository(AppDbContext dbContext) {
+			this.dbContext = dbContext;
+		}
 
-	public MovieRepository(AppDbContext dbContext) {
-		this.dbContext = dbContext;
-	}
+		public Task<List<Movie>> SelectByGenreId(Guid genreId) {
+			return dbContext.Movies.Include(movie => movie.Genre)
+				.Include(movie => movie.MovieActors)
+				.Where(movie => movie.GenreId == genreId)
+				.ToListAsync();
+		}
 
-	public Task<List<Movie>> SelectByGenreId(Guid genreId) {
-		return dbContext.Movies.Include(movie => movie.Genre)
-			.Include(movie => movie.MovieActors)
-			.Where(movie => movie.GenreId == genreId)
-			.ToListAsync();
-	}
+		public async Task<List<Movie>> SelectTopN(int n = 20) {
+			return await dbContext.Movies.Include(movie => movie.Genre)
+				.Include(movie => movie.MovieActors)
+				.OrderBy(movie => movie.Title)
+				.Take(n)
+				.ToListAsync();
+		}
 
-	public async Task<List<Movie>> SelectTopN(int n = 20) {
-		return await dbContext.Movies.Include(movie => movie.Genre)
-			.Include(movie => movie.MovieActors)
-			.OrderBy(movie => movie.Title)
-			.Take(n)
-			.ToListAsync();
-	}
+		public async Task<Movie?> SelectByTitle(string title) {
+			return await dbContext.Movies.Include(movie => movie.Genre)
+				.Include(movie => movie.MovieActors)
+				.FirstOrDefaultAsync(movie => movie.Title == title);
+		}
 
-	public async Task<Movie?> SelectByTitle(string title) {
-		return await dbContext.Movies.Include(movie => movie.Genre)
-			.Include(movie => movie.MovieActors)
-			.FirstOrDefaultAsync(movie => movie.Title == title);
-	}
+		public async Task<Movie?> SelectById(Guid id) {
+			return await dbContext.Movies.Include(movie => movie.Genre)
+				.Include(movie => movie.MovieActors)
+				.FirstOrDefaultAsync(movie => movie.Id == id);
+		}
 
-	public async Task<Movie?> SelectById(Guid id) {
-		return await dbContext.Movies.Include(movie => movie.Genre)
-			.Include(movie => movie.MovieActors)
-			.FirstOrDefaultAsync(movie => movie.Id == id);
-	}
+		public async Task<Movie> Create(int rank, string title, int year, string storyLine, Genre genre) {
+			var movie = new Movie() {
+				Id = Guid.NewGuid(),
+				Rank = rank,
+				Title = title,
+				Year = year,
+				StoryLine = storyLine,
+				CreationDate = DateTimeOffset.Now,
+				GenreId = genre.Id,
+			};
 
-	public async Task<Movie> Create(int rank, string title, int year, string storyLine, Genre genre) {
-		var movie = new Movie() {
-			Id = Guid.NewGuid(),
-			Rank = rank,
-			Title = title,
-			Year = year,
-			StoryLine = storyLine,
-			CreationDate = DateTimeOffset.Now,
-			GenreId = genre.Id,
-		};
+			await dbContext.AddAsync(movie);
 
-		await dbContext.AddAsync(movie);
-
-		return movie;
+			return movie;
+		}
 	}
 }

@@ -9,15 +9,15 @@ html {
 }
 
 html {
-	position: relative;
 	height: 100%;
+	position: relative;
 }
 
 body {
-	margin-bottom: 60px;
-	height: 100%;
 	display: flex;
 	flex-direction: column;
+	height: 100%;
+	margin-bottom: 60px;
 }
 
 #myimdb-container {
@@ -26,8 +26,8 @@ body {
 }
 
 #myimdb-container > main {
-	width: 100%;
 	height: 100%;
+	width: 100%;
 }
 
 @media (max-width: 95rem) {
