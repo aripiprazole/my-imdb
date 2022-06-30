@@ -1,12 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Api;
+using Microsoft.EntityFrameworkCore;
 using MyImdb.Entities;
 
 namespace MyImdb.Business.Repositories {
 	public class MovieActorRepository {
 		private readonly AppDbContext dbContext;
+		private readonly ExceptionBuilder exceptionBuilder;
 
-		public MovieActorRepository(AppDbContext dbContext) {
+		public MovieActorRepository(AppDbContext dbContext, ExceptionBuilder exceptionBuilder) {
 			this.dbContext = dbContext;
+			this.exceptionBuilder = exceptionBuilder;
 		}
 
 		public async Task<List<Actor>> SelectActorsByMovieId(Guid id, int n = 20) {
@@ -34,7 +37,10 @@ namespace MyImdb.Business.Repositories {
 		}
 
 		public async Task LinkMovieToActor(Guid movieId, Guid actorId) {
-			var movieActor = new MovieActor() { MovieId = movieId, ActorId = actorId };
+			var movieActor = new MovieActor() {
+				MovieId = movieId,
+				ActorId = actorId
+			};
 
 			await dbContext.AddAsync(movieActor);
 		}

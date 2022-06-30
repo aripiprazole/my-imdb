@@ -1,3 +1,4 @@
+using Api;
 using Microsoft.EntityFrameworkCore;
 using MyImdb.Business.Repositories;
 using MyImdb.Business.Services;
@@ -19,6 +20,8 @@ builder.Host.ConfigureLogging(
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSingleton<ExceptionBuilder>();
 
 builder.Services.AddScoped<GenreRepository>();
 builder.Services.AddScoped<GenreService>();

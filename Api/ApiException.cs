@@ -5,9 +5,5 @@
 		}
 
 		public ErrorModel Error { get; }
-
-		public static ExceptionBuilder Builder() {
-			return new ExceptionBuilder();
-		}
 	}
 }

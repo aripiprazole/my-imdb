@@ -11,14 +11,6 @@ namespace MyImdb.Business.Services {
 			this.dbContext = dbContext;
 		}
 
-		public async Task<List<Movie>> SelectMoviesByActorId(Guid id, int n = 20) {
-			return await actorRepository.SelectMoviesByActorId(id, n);
-		}
-
-		public async Task<List<Actor>> SelectActorsByMovieId(Guid id, int n = 20) {
-			return await actorRepository.SelectActorsByMovieId(id, n);
-		}
-
 		public async Task LinkMovieToActor(Guid movieId, Guid actorId) {
 			await actorRepository.LinkMovieToActor(movieId, actorId);
 

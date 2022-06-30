@@ -1,17 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Api;
+using Microsoft.EntityFrameworkCore;
 using MyImdb.Entities;
 
 namespace MyImdb.Business.Repositories {
 	public class ActorRepository {
 		private readonly AppDbContext dbContext;
+		private readonly ExceptionBuilder exceptionBuilder;
 
-		public ActorRepository(AppDbContext dbContext) {
+		public ActorRepository(AppDbContext dbContext, ExceptionBuilder exceptionBuilder) {
 			this.dbContext = dbContext;
+			this.exceptionBuilder = exceptionBuilder;
 		}
 
-		public async Task<Actor?> SelectById(Guid id) {
-			return await dbContext.Actors.Include(actor => actor.MovieActors)
+		public async Task<Actor> SelectById(Guid id) {
+			var actor = await dbContext.Actors
+				.Include(actor => actor.MovieActors)
 				.FirstOrDefaultAsync(actor => actor.Id == id);
+
+			return actor ?? throw exceptionBuilder.Api(ErrorCodes.ActorNotFound, new { id });
 		}
 
 		public async Task<List<Actor>> SelectTopN(int n = 20) {

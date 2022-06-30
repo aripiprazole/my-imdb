@@ -8,26 +8,24 @@ namespace MyImdb.Business.Services {
 		private readonly AppDbContext dbContext;
 		private readonly GenreRepository genreRepository;
 		private readonly MovieRepository movieRepository;
+		private readonly ExceptionBuilder exceptionBuilder;
 
-		public GenreService(MovieRepository movieRepository, GenreRepository genreRepository, AppDbContext dbContext) {
+		public GenreService(
+			MovieRepository movieRepository,
+			GenreRepository genreRepository,
+			AppDbContext dbContext,
+			ExceptionBuilder exceptionBuilder
+		) {
 			this.movieRepository = movieRepository;
 			this.genreRepository = genreRepository;
 			this.dbContext = dbContext;
-		}
-
-		public async Task<Genre> SelectById(Guid id) {
-			return await genreRepository.SelectById(id) ?? throw ApiException.Builder()
-				.Build(ErrorCodes.GenreNotFound, new { id });
-		}
-
-		public async Task<List<Genre>> SelectTopN(int n = 20) {
-			return await genreRepository.SelectTopN(n);
+			this.exceptionBuilder = exceptionBuilder;
 		}
 
 		public async Task<Genre> Create(string name) {
 			var genre = await genreRepository.SelectByName(name);
 			if (genre != null) {
-				throw ApiException.Builder().Build(ErrorCodes.GenreNotFound, new {});
+				throw exceptionBuilder.Api(ErrorCodes.GenreNotFound, new { });
 			}
 
 			genre = await genreRepository.Create(name);
@@ -40,7 +38,7 @@ namespace MyImdb.Business.Services {
 		public async Task Update(Genre target, string name) {
 			var genreExists = await dbContext.Genres.AnyAsync(genre => genre.Name == name && genre.Id != target.Id);
 			if (genreExists) {
-				throw ApiException.Builder().Build(ErrorCodes.GenreAlreadyExists, new { name });
+				throw exceptionBuilder.Api(ErrorCodes.GenreAlreadyExists, new { name });
 			}
 
 			target.Name = name;

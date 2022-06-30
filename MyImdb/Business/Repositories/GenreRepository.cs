@@ -1,16 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Api;
+using Microsoft.EntityFrameworkCore;
 using MyImdb.Entities;
 
 namespace MyImdb.Business.Repositories {
 	public class GenreRepository {
 		private readonly AppDbContext dbContext;
+		private readonly ExceptionBuilder exceptionBuilder;
 
-		public GenreRepository(AppDbContext dbContext) {
+		public GenreRepository(AppDbContext dbContext, ExceptionBuilder exceptionBuilder) {
 			this.dbContext = dbContext;
+			this.exceptionBuilder = exceptionBuilder;
 		}
 
-		public async Task<Genre?> SelectById(Guid id) {
-			return await dbContext.Genres.FirstOrDefaultAsync(genre => genre.Id == id);
+		public async Task<Genre> SelectById(Guid id) {
+			var genre = await dbContext.Genres.FirstOrDefaultAsync(genre => genre.Id == id);
+
+			return genre ?? throw exceptionBuilder.Api(ErrorCodes.GenreNotFound, new { id });
 		}
 
 		public async Task<List<Genre>> SelectTopN(int n = 20) {
@@ -18,7 +23,10 @@ namespace MyImdb.Business.Repositories {
 		}
 
 		public async Task<Genre> Create(string name) {
-			var genre = new Genre() { Id = Guid.NewGuid(), Name = name };
+			var genre = new Genre() {
+				Id = Guid.NewGuid(),
+				Name = name,
+			};
 
 			await dbContext.AddAsync(genre);
 

@@ -12,15 +12,6 @@ namespace MyImdb.Business.Services {
 			this.dbContext = dbContext;
 		}
 
-		public async Task<Actor> SelectById(Guid id) {
-			return await actorRepository.SelectById(id) ??
-			       throw ApiException.Builder().Build(ErrorCodes.ActorNotFound, new { id });
-		}
-
-		public async Task<List<Actor>> SelectTopN(int n = 20) {
-			return await actorRepository.SelectTopN(n);
-		}
-
 		public async Task<Actor> Create(string name, string birthplace) {
 			var movie = await actorRepository.Create(name, birthplace);
 

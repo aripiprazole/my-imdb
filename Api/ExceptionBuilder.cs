@@ -1,6 +1,6 @@
 ﻿namespace Api {
 	public class ExceptionBuilder {
-		public ApiException Build(ErrorCodes code, object? details = null) {
+		public ApiException Api(ErrorCodes code, object? details = null) {
 			var message = code switch {
 				ErrorCodes.Unknown => "An unknown error occurred",
 				ErrorCodes.GenreNotFound => "Genre not found",
