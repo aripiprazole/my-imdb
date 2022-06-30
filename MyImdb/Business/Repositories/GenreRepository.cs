@@ -24,8 +24,7 @@ namespace MyImdb.Business.Repositories {
 
 		public async Task<Genre> Create(string name) {
 			var genre = new Genre() {
-				Id = Guid.NewGuid(),
-				Name = name,
+				Id = Guid.NewGuid(), Name = name,
 			};
 
 			await dbContext.AddAsync(genre);

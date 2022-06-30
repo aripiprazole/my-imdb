@@ -38,18 +38,16 @@ namespace MyImdb.Business.Repositories {
 
 		public async Task LinkMovieToActor(Guid movieId, Guid actorId) {
 			var movieActor = new MovieActor() {
-				MovieId = movieId,
-				ActorId = actorId
+				MovieId = movieId, ActorId = actorId,
 			};
 
 			await dbContext.AddAsync(movieActor);
 		}
 
 		public async Task UnlinkMovieFromActor(Guid movieId, Guid actorId) {
-			var movieActor =
-				await dbContext.MovieActors.FirstOrDefaultAsync(
-					pivot => pivot.MovieId == movieId && pivot.ActorId == actorId
-				);
+			var movieActor = await dbContext.MovieActors.FirstOrDefaultAsync(
+				pivot => pivot.MovieId == movieId && pivot.ActorId == actorId
+			);
 
 			if (movieActor == null) {
 				return;

@@ -6,20 +6,20 @@ using MyImdb.Entities;
 namespace MyImdb.Business.Services {
 	public class MovieService {
 		private readonly AppDbContext dbContext;
+		private readonly ExceptionBuilder exceptionBuilder;
 		private readonly GenreRepository genreRepository;
 		private readonly MovieRepository movieRepository;
-		private readonly ExceptionBuilder exceptionBuilder;
 
 		public MovieService(
-			GenreRepository genreRepository,
-			MovieRepository movieRepository,
 			AppDbContext dbContext,
-			ExceptionBuilder exceptionBuilder
+			ExceptionBuilder exceptionBuilder,
+			GenreRepository genreRepository,
+			MovieRepository movieRepository
 		) {
-			this.genreRepository = genreRepository;
-			this.movieRepository = movieRepository;
 			this.dbContext = dbContext;
 			this.exceptionBuilder = exceptionBuilder;
+			this.genreRepository = genreRepository;
+			this.movieRepository = movieRepository;
 		}
 
 		public async Task<Movie> Create(int rank, string title, int year, string storyLine, Guid genreId) {

@@ -13,8 +13,7 @@ namespace MyImdb.Business.Repositories {
 		}
 
 		public async Task<Actor> SelectById(Guid id) {
-			var actor = await dbContext.Actors
-				.Include(actor => actor.MovieActors)
+			var actor = await dbContext.Actors.Include(actor => actor.MovieActors)
 				.FirstOrDefaultAsync(actor => actor.Id == id);
 
 			return actor ?? throw exceptionBuilder.Api(ErrorCodes.ActorNotFound, new { id });

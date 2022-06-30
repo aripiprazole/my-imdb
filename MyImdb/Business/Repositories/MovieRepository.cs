@@ -34,8 +34,7 @@ namespace MyImdb.Business.Repositories {
 		}
 
 		public async Task<Movie> SelectById(Guid id) {
-			var movie = await dbContext.Movies
-				.Include(movie => movie.Genre)
+			var movie = await dbContext.Movies.Include(movie => movie.Genre)
 				.Include(movie => movie.MovieActors)
 				.FirstOrDefaultAsync(movie => movie.Id == id);
 

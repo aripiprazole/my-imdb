@@ -1,5 +1,4 @@
-﻿using Api;
-using MyImdb.Business.Repositories;
+﻿using MyImdb.Business.Repositories;
 using MyImdb.Entities;
 
 namespace MyImdb.Business.Services {

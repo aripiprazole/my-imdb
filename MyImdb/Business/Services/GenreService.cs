@@ -6,9 +6,9 @@ using MyImdb.Entities;
 namespace MyImdb.Business.Services {
 	public class GenreService {
 		private readonly AppDbContext dbContext;
+		private readonly ExceptionBuilder exceptionBuilder;
 		private readonly GenreRepository genreRepository;
 		private readonly MovieRepository movieRepository;
-		private readonly ExceptionBuilder exceptionBuilder;
 
 		public GenreService(
 			MovieRepository movieRepository,
@@ -25,7 +25,7 @@ namespace MyImdb.Business.Services {
 		public async Task<Genre> Create(string name) {
 			var genre = await genreRepository.SelectByName(name);
 			if (genre != null) {
-				throw exceptionBuilder.Api(ErrorCodes.GenreNotFound, new { });
+				throw exceptionBuilder.Api(ErrorCodes.GenreNotFound, new {});
 			}
 
 			genre = await genreRepository.Create(name);

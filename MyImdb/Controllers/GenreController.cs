@@ -8,8 +8,8 @@ namespace MyImdb.Controllers {
 	[ApiController]
 	[Route("api/genres")]
 	public class GenreController {
-		private readonly GenreService genreService;
 		private readonly GenreRepository genreRepository;
+		private readonly GenreService genreService;
 		private readonly ModelConverter modelConverter;
 
 		public GenreController(

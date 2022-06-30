@@ -8,12 +8,12 @@ namespace MyImdb.Controllers {
 	[ApiController]
 	[Route("api/movies")]
 	public class MovieController {
-		private readonly ModelConverter modelConverter;
-		private readonly MovieService movieService;
-		private readonly MovieRepository movieRepository;
-		private readonly MovieActorService movieActorService;
-		private readonly MovieActorRepository movieActorRepository;
 		private readonly ActorRepository actorRepository;
+		private readonly ModelConverter modelConverter;
+		private readonly MovieActorRepository movieActorRepository;
+		private readonly MovieActorService movieActorService;
+		private readonly MovieRepository movieRepository;
+		private readonly MovieService movieService;
 
 		public MovieController(
 			ModelConverter modelConverter,
