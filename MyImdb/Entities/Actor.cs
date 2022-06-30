@@ -18,6 +18,10 @@ namespace MyImdb.Entities {
 	public class MovieActor {
 		public Guid Id { get; set; }
 
+		[MaxLength(100)]
+		[Required]
+		public string Character { get; set; } = default!;
+
 		[Required]
 		public Guid MovieId { get; set; }
 
