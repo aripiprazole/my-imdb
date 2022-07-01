@@ -14,7 +14,7 @@ namespace MyImdb.Business.Services {
 		}
 
 		public async Task<MovieActor> CreateAsync(Guid movieId, Guid actorId, string character) {
-			var movieActor = await movieActorRepository.CreateAsync(movieId, actorId);
+			var movieActor = await movieActorRepository.CreateAsync(movieId, actorId, character);
 
 			await dbContext.SaveChangesAsync();
 

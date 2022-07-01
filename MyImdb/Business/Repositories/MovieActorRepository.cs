@@ -34,11 +34,12 @@ namespace MyImdb.Business.Repositories {
 			return movieActors;
 		}
 
-		public async Task<MovieActor> CreateAsync(Guid movieId, Guid actorId) {
+		public async Task<MovieActor> CreateAsync(Guid movieId, Guid actorId, string character) {
 			var movieActor = new MovieActor() {
 				Id = Guid.NewGuid(),
 				MovieId = movieId,
 				ActorId = actorId,
+				Character = character,
 			};
 
 			await dbContext.AddAsync(movieActor);
