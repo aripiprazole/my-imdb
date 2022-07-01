@@ -12,13 +12,13 @@ namespace MyImdb.Business.Repositories {
 			this.exceptionBuilder = exceptionBuilder;
 		}
 
-		public async Task<MovieActor> SelectById(Guid id) {
+		public async Task<MovieActor> SelectByIdAsync(Guid id) {
 			var movieActor = await dbContext.MovieActors.FirstOrDefaultAsync(movieActor => movieActor.Id == id);
 
 			return movieActor ?? throw exceptionBuilder.Api(ErrorCodes.MovieActorNotFound, new { id });
 		}
 
-		public async Task<List<MovieActor>> SelectByMovieId(Guid movieId, int n = 20) {
+		public async Task<List<MovieActor>> SelectByMovieIdAsync(Guid movieId, int n = 20) {
 			var movieActors = await dbContext.MovieActors
 				.Where(movieActor => movieActor.MovieId == movieId)
 				.ToListAsync();
@@ -26,7 +26,7 @@ namespace MyImdb.Business.Repositories {
 			return movieActors;
 		}
 
-		public async Task<List<MovieActor>> SelectByActorId(Guid actorId, int n = 20) {
+		public async Task<List<MovieActor>> SelectByActorIdAsync(Guid actorId, int n = 20) {
 			var movieActors = await dbContext.MovieActors
 				.Where(movieActor => movieActor.ActorId == actorId)
 				.ToListAsync();
@@ -34,7 +34,7 @@ namespace MyImdb.Business.Repositories {
 			return movieActors;
 		}
 
-		public async Task<MovieActor> Create(Guid movieId, Guid actorId) {
+		public async Task<MovieActor> CreateAsync(Guid movieId, Guid actorId) {
 			var movieActor = new MovieActor() {
 				Id = Guid.NewGuid(),
 				MovieId = movieId,
@@ -46,7 +46,7 @@ namespace MyImdb.Business.Repositories {
 			return movieActor;
 		}
 
-		public async Task Delete(Guid id) {
+		public async Task DeleteAsync(Guid id) {
 			var movieActor = await dbContext.MovieActors.FirstOrDefaultAsync(pivot => pivot.Id == id);
 
 			if (movieActor == null) {

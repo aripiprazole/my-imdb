@@ -13,22 +13,22 @@ namespace MyImdb.Business.Services {
 			this.dbContext = dbContext;
 		}
 
-		public async Task<MovieActor> Create(Guid movieId, Guid actorId, string character) {
-			var movieActor = await movieActorRepository.Create(movieId, actorId);
+		public async Task<MovieActor> CreateAsync(Guid movieId, Guid actorId, string character) {
+			var movieActor = await movieActorRepository.CreateAsync(movieId, actorId);
 
 			await dbContext.SaveChangesAsync();
 
 			return movieActor;
 		}
 
-		public async Task Update(MovieActor movieActor, string character) {
+		public async Task UpdateAsync(MovieActor movieActor, string character) {
 			movieActor.Character = character;
 
 			await dbContext.SaveChangesAsync();
 		}
 
-		public async Task Delete(MovieActor movieActor) {
-			await movieActorRepository.Delete(movieActor.Id);
+		public async Task DeleteAsync(MovieActor movieActor) {
+			await movieActorRepository.DeleteAsync(movieActor.Id);
 
 			await dbContext.SaveChangesAsync();
 		}

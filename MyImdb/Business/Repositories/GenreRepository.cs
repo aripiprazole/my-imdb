@@ -12,17 +12,17 @@ namespace MyImdb.Business.Repositories {
 			this.exceptionBuilder = exceptionBuilder;
 		}
 
-		public async Task<Genre> SelectById(Guid id) {
+		public async Task<Genre> SelectByIdAsync(Guid id) {
 			var genre = await dbContext.Genres.FirstOrDefaultAsync(genre => genre.Id == id);
 
 			return genre ?? throw exceptionBuilder.Api(ErrorCodes.GenreNotFound, new { id });
 		}
 
-		public async Task<List<Genre>> SelectTopN(int n = 20) {
+		public async Task<List<Genre>> SelectTopNAsync(int n = 20) {
 			return await dbContext.Genres.OrderBy(genre => genre.Name).Take(n).ToListAsync();
 		}
 
-		public async Task<Genre> Create(string name) {
+		public async Task<Genre> CreateAsync(string name) {
 			var genre = new Genre() {
 				Id = Guid.NewGuid(), Name = name,
 			};
@@ -32,7 +32,7 @@ namespace MyImdb.Business.Repositories {
 			return genre;
 		}
 
-		public async Task<Genre?> SelectByName(string name) {
+		public async Task<Genre?> SelectByNameAsync(string name) {
 			return await dbContext.Genres.FirstOrDefaultAsync(genre => genre.Name == name);
 		}
 	}

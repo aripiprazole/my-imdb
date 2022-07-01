@@ -27,28 +27,28 @@ namespace MyImdb.Controllers {
 
 		[HttpGet("{id:guid}")]
 		public async Task<MovieModel> Get(Guid id) {
-			var movie = await movieRepository.SelectById(id);
+			var movie = await movieRepository.SelectByIdAsync(id);
 
 			return modelConverter.ToModel(movie);
 		}
 
 		[HttpGet]
 		public async Task<List<MovieModel>> List(int n = 20) {
-			var movies = await movieRepository.SelectTopN(n);
+			var movies = await movieRepository.SelectTopNAsync(n);
 
 			return movies.ConvertAll(modelConverter.ToModel);
 		}
 
 		[HttpGet("{id:guid}/characters")]
 		public async Task<List<MovieActorModel>> ListCharacters(Guid id, int n = 20) {
-			var movies = await movieActorRepository.SelectByMovieId(id, n);
+			var movies = await movieActorRepository.SelectByMovieIdAsync(id, n);
 
 			return movies.ConvertAll(modelConverter.ToModel);
 		}
 
 		[HttpPost]
 		public async Task<MovieModel> Create(MovieData request) {
-			var movie = await movieService.Create(
+			var movie = await movieService.CreateAsync(
 				request.Rank,
 				request.Title,
 				request.Year,
@@ -61,9 +61,9 @@ namespace MyImdb.Controllers {
 
 		[HttpPut("{id:guid}")]
 		public async Task<MovieModel> Update(Guid id, MovieData request) {
-			var movie = await movieRepository.SelectById(id);
+			var movie = await movieRepository.SelectByIdAsync(id);
 
-			await movieService.Update(
+			await movieService.UpdateAsync(
 				movie,
 				request.Rank,
 				request.Title,
@@ -77,9 +77,9 @@ namespace MyImdb.Controllers {
 
 		[HttpDelete("{id:guid}")]
 		public async Task Delete(Guid id) {
-			var movie = await movieRepository.SelectById(id);
+			var movie = await movieRepository.SelectByIdAsync(id);
 
-			await movieService.Delete(movie);
+			await movieService.DeleteAsync(movie);
 		}
 	}
 }

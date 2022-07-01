@@ -22,22 +22,22 @@ namespace MyImdb.Business.Services {
 			this.movieRepository = movieRepository;
 		}
 
-		public async Task<Movie> Create(int rank, string title, int year, string storyLine, Guid genreId) {
-			var genre = await genreRepository.SelectById(genreId);
+		public async Task<Movie> CreateAsync(int rank, string title, int year, string storyLine, Guid genreId) {
+			var genre = await genreRepository.SelectByIdAsync(genreId);
 
-			var movie = await movieRepository.SelectByTitle(title);
+			var movie = await movieRepository.SelectByTitleAsync(title);
 			if (movie != null) {
 				throw exceptionBuilder.Api(ErrorCodes.MovieAlreadyExists, new { title });
 			}
 
-			movie = await movieRepository.Create(rank, title, year, storyLine, genre);
+			movie = await movieRepository.CreateAsync(rank, title, year, storyLine, genre);
 
 			await dbContext.SaveChangesAsync();
 
 			return movie;
 		}
 
-		public async Task Update(Movie target, int rank, string title, int year, string storyLine, Guid genreId) {
+		public async Task UpdateAsync(Movie target, int rank, string title, int year, string storyLine, Guid genreId) {
 			var movieExists = await dbContext.Movies.AnyAsync(movie => movie.Title == title && movie.Id != target.Id);
 			if (movieExists) {
 				throw exceptionBuilder.Api(ErrorCodes.MovieAlreadyExists, new { title });
@@ -52,7 +52,7 @@ namespace MyImdb.Business.Services {
 			await dbContext.SaveChangesAsync();
 		}
 
-		public async Task Delete(Movie movie) {
+		public async Task DeleteAsync(Movie movie) {
 			dbContext.Remove(movie);
 
 			foreach (var movieActor in movie.MovieActors) {

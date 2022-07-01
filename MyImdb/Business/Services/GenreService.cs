@@ -22,20 +22,20 @@ namespace MyImdb.Business.Services {
 			this.exceptionBuilder = exceptionBuilder;
 		}
 
-		public async Task<Genre> Create(string name) {
-			var genre = await genreRepository.SelectByName(name);
+		public async Task<Genre> CreateAsync(string name) {
+			var genre = await genreRepository.SelectByNameAsync(name);
 			if (genre != null) {
-				throw exceptionBuilder.Api(ErrorCodes.GenreNotFound, new {});
+				throw exceptionBuilder.Api(ErrorCodes.GenreNotFound, new { });
 			}
 
-			genre = await genreRepository.Create(name);
+			genre = await genreRepository.CreateAsync(name);
 
 			await dbContext.SaveChangesAsync();
 
 			return genre;
 		}
 
-		public async Task Update(Genre target, string name) {
+		public async Task UpdateAsync(Genre target, string name) {
 			var genreExists = await dbContext.Genres.AnyAsync(genre => genre.Name == name && genre.Id != target.Id);
 			if (genreExists) {
 				throw exceptionBuilder.Api(ErrorCodes.GenreAlreadyExists, new { name });
@@ -46,7 +46,7 @@ namespace MyImdb.Business.Services {
 			await dbContext.SaveChangesAsync();
 		}
 
-		public async Task Delete(Genre genre) {
+		public async Task DeleteAsync(Genre genre) {
 			var movies = await movieRepository.SelectByGenreId(genre.Id);
 
 			dbContext.RemoveRange(movies);

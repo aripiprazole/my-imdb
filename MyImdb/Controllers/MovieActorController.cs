@@ -24,25 +24,25 @@ namespace MyImdb.Controllers {
 
 		[HttpPost]
 		public async Task<MovieActorModel> Create(MovieActorData request) {
-			var movieActor = await movieActorService.Create(request.MovieId, request.ActorId, request.Character);
+			var movieActor = await movieActorService.CreateAsync(request.MovieId, request.ActorId, request.Character);
 
 			return modelConverter.ToModel(movieActor);
 		}
 
 		[HttpPut("{id:guid}")]
 		public async Task<MovieActorModel> Update(Guid id, MovieActorData request) {
-			var actor = await movieActorRepository.SelectById(id);
+			var actor = await movieActorRepository.SelectByIdAsync(id);
 
-			await movieActorService.Update(actor, request.Character);
+			await movieActorService.UpdateAsync(actor, request.Character);
 
 			return modelConverter.ToModel(actor);
 		}
 
 		[HttpDelete("{id:guid}")]
 		public async Task Delete(Guid id) {
-			var actor = await movieActorRepository.SelectById(id);
+			var actor = await movieActorRepository.SelectByIdAsync(id);
 
-			await movieActorService.Delete(actor);
+			await movieActorService.DeleteAsync(actor);
 		}
 	}
 }

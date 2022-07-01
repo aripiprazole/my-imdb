@@ -12,21 +12,21 @@ namespace MyImdb.Business.Repositories {
 			this.exceptionBuilder = exceptionBuilder;
 		}
 
-		public async Task<Actor> SelectById(Guid id) {
+		public async Task<Actor> SelectByIdAsync(Guid id) {
 			var actor = await dbContext.Actors.Include(actor => actor.MovieActors)
 				.FirstOrDefaultAsync(actor => actor.Id == id);
 
 			return actor ?? throw exceptionBuilder.Api(ErrorCodes.ActorNotFound, new { id });
 		}
 
-		public async Task<List<Actor>> SelectTopN(int n = 20) {
+		public async Task<List<Actor>> SelectTopNAsync(int n = 20) {
 			return await dbContext.Actors.Include(actor => actor.MovieActors)
 				.OrderBy(actor => actor.Name)
 				.Take(n)
 				.ToListAsync();
 		}
 
-		public async Task<Actor> Create(string name, string birthplace) {
+		public async Task<Actor> CreateAsync(string name, string birthplace) {
 			var actor = new Actor() {
 				Id = Guid.NewGuid(),
 				Name = name,
