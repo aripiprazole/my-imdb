@@ -6,5 +6,6 @@
 		MovieNotFound,
 		MovieAlreadyExists,
 		ActorNotFound,
+		MovieActorNotFound,
 	}
 }

@@ -12,22 +12,16 @@ namespace MyImdb.Controllers {
 		private readonly ActorService actorService;
 		private readonly ModelConverter modelConverter;
 		private readonly MovieActorRepository movieActorRepository;
-		private readonly MovieActorService movieActorService;
-		private readonly MovieRepository movieRepository;
 
 		public ActorController(
 			ModelConverter modelConverter,
 			ActorService actorService,
 			ActorRepository actorRepository,
-			MovieRepository movieRepository,
-			MovieActorService movieActorService,
 			MovieActorRepository movieActorRepository
 		) {
 			this.modelConverter = modelConverter;
 			this.actorService = actorService;
 			this.actorRepository = actorRepository;
-			this.movieRepository = movieRepository;
-			this.movieActorService = movieActorService;
 			this.movieActorRepository = movieActorRepository;
 		}
 
@@ -45,27 +39,11 @@ namespace MyImdb.Controllers {
 			return actors.ConvertAll(modelConverter.ToModel);
 		}
 
-		[HttpGet("{id:guid}/movies")]
-		public async Task<List<MovieModel>> ListMovies(Guid id, int n = 20) {
-			var movies = await movieActorRepository.SelectMoviesByActorId(id, n);
+		[HttpGet("{id:guid}/characters")]
+		public async Task<List<MovieActorModel>> ListCharacters(Guid id, int n = 20) {
+			var movies = await movieActorRepository.SelectByActorId(id, n);
 
 			return movies.ConvertAll(modelConverter.ToModel);
-		}
-
-		[HttpPost("{id:guid}/movies")]
-		public async Task LinkMovie(Guid id, LinkMovieAndActorData request) {
-			var movie = await movieRepository.SelectById(request.TargetMovieId);
-			var actor = await actorRepository.SelectById(id);
-
-			await movieActorService.LinkMovieToActor(movie.Id, actor.Id);
-		}
-
-		[HttpDelete("{id:guid}/movies")]
-		public async Task UnlinkMovie(Guid id, LinkMovieAndActorData request) {
-			var movie = await movieRepository.SelectById(request.TargetMovieId);
-			var actor = await actorRepository.SelectById(id);
-
-			await movieActorService.UnlinkMovieFromActor(movie.Id, actor.Id);
 		}
 
 		[HttpPost]

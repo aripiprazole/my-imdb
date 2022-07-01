@@ -12,42 +12,42 @@ namespace MyImdb.Business.Repositories {
 			this.exceptionBuilder = exceptionBuilder;
 		}
 
-		public async Task<List<Actor>> SelectActorsByMovieId(Guid id, int n = 20) {
-			var pivots = await dbContext.MovieActors.Include(pivot => pivot.Actor)
-				.Include(pivot => pivot.Actor.MovieActors)
-				.Include(pivot => pivot.Movie)
-				.Include(pivot => pivot.Movie.Genre)
-				.Include(pivot => pivot.Movie.MovieActors)
-				.Where(pivot => pivot.MovieId == id)
-				.ToListAsync();
+		public async Task<MovieActor> SelectById(Guid id) {
+			var movieActor = await dbContext.MovieActors.FirstOrDefaultAsync(movieActor => movieActor.Id == id);
 
-			return pivots.ConvertAll(pivot => pivot.Actor);
+			return movieActor ?? throw exceptionBuilder.Api(ErrorCodes.MovieActorNotFound, new { id });
 		}
 
-		public async Task<List<Movie>> SelectMoviesByActorId(Guid id, int n = 20) {
-			var pivots = await dbContext.MovieActors.Include(pivot => pivot.Actor)
-				.Include(pivot => pivot.Actor.MovieActors)
-				.Include(pivot => pivot.Movie)
-				.Include(pivot => pivot.Movie.Genre)
-				.Include(pivot => pivot.Movie.MovieActors)
-				.Where(pivot => pivot.ActorId == id)
+		public async Task<List<MovieActor>> SelectByMovieId(Guid movieId, int n = 20) {
+			var movieActors = await dbContext.MovieActors
+				.Where(movieActor => movieActor.MovieId == movieId)
 				.ToListAsync();
 
-			return pivots.ConvertAll(pivot => pivot.Movie);
+			return movieActors;
 		}
 
-		public async Task LinkMovieToActor(Guid movieId, Guid actorId) {
+		public async Task<List<MovieActor>> SelectByActorId(Guid actorId, int n = 20) {
+			var movieActors = await dbContext.MovieActors
+				.Where(movieActor => movieActor.ActorId == actorId)
+				.ToListAsync();
+
+			return movieActors;
+		}
+
+		public async Task<MovieActor> Create(Guid movieId, Guid actorId) {
 			var movieActor = new MovieActor() {
-				MovieId = movieId, ActorId = actorId,
+				Id = Guid.NewGuid(),
+				MovieId = movieId,
+				ActorId = actorId,
 			};
 
 			await dbContext.AddAsync(movieActor);
+
+			return movieActor;
 		}
 
-		public async Task UnlinkMovieFromActor(Guid movieId, Guid actorId) {
-			var movieActor = await dbContext.MovieActors.FirstOrDefaultAsync(
-				pivot => pivot.MovieId == movieId && pivot.ActorId == actorId
-			);
+		public async Task Delete(Guid id) {
+			var movieActor = await dbContext.MovieActors.FirstOrDefaultAsync(pivot => pivot.Id == id);
 
 			if (movieActor == null) {
 				return;

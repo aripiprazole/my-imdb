@@ -8,10 +8,8 @@ namespace MyImdb.Controllers {
 	[ApiController]
 	[Route("api/movies")]
 	public class MovieController {
-		private readonly ActorRepository actorRepository;
 		private readonly ModelConverter modelConverter;
 		private readonly MovieActorRepository movieActorRepository;
-		private readonly MovieActorService movieActorService;
 		private readonly MovieRepository movieRepository;
 		private readonly MovieService movieService;
 
@@ -19,16 +17,12 @@ namespace MyImdb.Controllers {
 			ModelConverter modelConverter,
 			MovieService movieService,
 			MovieRepository movieRepository,
-			MovieActorService movieActorService,
-			MovieActorRepository movieActorRepository,
-			ActorRepository actorRepository
+			MovieActorRepository movieActorRepository
 		) {
 			this.modelConverter = modelConverter;
 			this.movieService = movieService;
 			this.movieRepository = movieRepository;
-			this.movieActorService = movieActorService;
 			this.movieActorRepository = movieActorRepository;
-			this.actorRepository = actorRepository;
 		}
 
 		[HttpGet("{id:guid}")]
@@ -45,29 +39,14 @@ namespace MyImdb.Controllers {
 			return movies.ConvertAll(modelConverter.ToModel);
 		}
 
-		[HttpGet("{id:guid}/actors")]
-		public async Task<List<ActorModel>> ListActors(Guid id, int n = 20) {
-			var actors = await movieActorRepository.SelectActorsByMovieId(id, n);
+		[HttpGet("{id:guid}/characters")]
+		public async Task<List<MovieActorModel>> ListCharacters(Guid id, int n = 20) {
+			var movies = await movieActorRepository.SelectByMovieId(id, n);
 
-			return actors.ConvertAll(modelConverter.ToModel);
+			return movies.ConvertAll(modelConverter.ToModel);
 		}
 
-		[HttpPost("{id:guid}/actors")]
-		public async Task LinkMovie(Guid id, LinkActorAndMovieData request) {
-			var movie = await movieRepository.SelectById(id);
-			var actor = await actorRepository.SelectById(request.TargetActorId);
-
-			await movieActorService.LinkMovieToActor(movie.Id, actor.Id);
-		}
-
-		[HttpDelete("{id:guid}/actors")]
-		public async Task UnlinkMovie(Guid id, LinkActorAndMovieData request) {
-			var movie = await movieRepository.SelectById(id);
-			var actor = await actorRepository.SelectById(request.TargetActorId);
-
-			await movieActorService.UnlinkMovieFromActor(movie.Id, actor.Id);
-		}
-
+		[HttpPost]
 		public async Task<MovieModel> Create(MovieData request) {
 			var movie = await movieService.Create(
 				request.Rank,

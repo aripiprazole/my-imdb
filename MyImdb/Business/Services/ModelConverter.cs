@@ -5,7 +5,8 @@ namespace MyImdb.Business.Services {
 	public class ModelConverter {
 		public GenreModel ToModel(Genre genre) {
 			return new GenreModel() {
-				Id = genre.Id, Name = genre.Name,
+				Id = genre.Id,
+				Name = genre.Name,
 			};
 		}
 
@@ -24,6 +25,14 @@ namespace MyImdb.Business.Services {
 				Id = actor.Id,
 				Name = actor.Name,
 				Birthplace = actor.Birthplace,
+			};
+		}
+
+		public MovieActorModel ToModel(MovieActor movieActor) {
+			return new MovieActorModel() {
+				Character = movieActor.Character,
+				MovieId = movieActor.MovieId,
+				ActorId = movieActor.ActorId,
 			};
 		}
 	}
