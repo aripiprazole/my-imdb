@@ -8,6 +8,7 @@
 				ErrorCodes.MovieNotFound => "Movie not found",
 				ErrorCodes.MovieAlreadyExists => "Movie already exists",
 				ErrorCodes.ActorNotFound => "Actor not found",
+				ErrorCodes.MovieActorNotFound => "Movie actor not found",
 				_ => "",
 			};
 
